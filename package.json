@@ -6,7 +6,15 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint",
+    "format": "prettier --write .",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,js,html,scss,css,json,md}": [
+      "prettier --write"
+    ]
   },
   "prettier": {
     "printWidth": 100,
@@ -33,16 +41,28 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@angular-eslint/builder": "20.1.1",
     "@angular/build": "^20.1.6",
     "@angular/cli": "^20.1.6",
     "@angular/compiler-cli": "^20.1.0",
+    "@eslint/js": "^9.29.0",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "20.1.1",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^54.0.0",
+    "eslint-plugin-unicorn": "^60.0.0",
+    "husky": "^9.1.7",
     "jasmine-core": "~5.8.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.8.2"
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "typescript": "~5.8.2",
+    "typescript-eslint": "8.34.1"
   }
 }
