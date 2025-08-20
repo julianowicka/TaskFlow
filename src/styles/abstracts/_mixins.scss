@@ -1,0 +1,177 @@
+// Media queries
+@mixin mq($from) {
+  @if $from == xs {
+    @media (min-width: #{$bp-xs}) {
+      @content;
+    }
+  } @else if $from == sm {
+    @media (min-width: #{$bp-sm}) {
+      @content;
+    }
+  } @else if $from == md {
+    @media (min-width: #{$bp-md}) {
+      @content;
+    }
+  } @else if $from == lg {
+    @media (min-width: #{$bp-lg}) {
+      @content;
+    }
+  } @else if $from == xl {
+    @media (min-width: #{$bp-xl}) {
+      @content;
+    }
+  } @else if $from == 2xl {
+    @media (min-width: #{$bp-2xl}) {
+      @content;
+    }
+  }
+}
+
+// Fluid typography
+@mixin fluid-type(
+  $min-font-size,
+  $max-font-size,
+  $min-viewport-width: $bp-sm,
+  $max-viewport-width: $bp-xl
+) {
+  $u1: unit($min-font-size);
+  $u2: unit($max-font-size);
+  $u3: unit($min-viewport-width);
+  $u4: unit($max-viewport-width);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    font-size: $min-font-size;
+
+    @media screen and (min-width: $min-viewport-width) {
+      font-size: calc(
+        #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+          (
+            (100vw - #{$min-viewport-width}) /
+              #{strip-unit($max-viewport-width - $min-viewport-width)}
+          )
+      );
+    }
+
+    @media screen and (min-width: $max-viewport-width) {
+      font-size: $max-font-size;
+    }
+  }
+}
+
+// Focus ring
+@mixin focus-ring($color: var(--color-focus), $offset: 2px) {
+  outline: 2px solid $color;
+  outline-offset: $offset;
+}
+
+// Text truncation
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// Flexbox helpers
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+  gap: $gap;
+}
+
+// Grid helpers
+@mixin grid($columns: 1, $rows: auto, $gap: var(--space-4)) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  grid-template-rows: $rows;
+  gap: $gap;
+}
+
+// Responsive grid
+@mixin responsive-grid($min-width: 250px, $gap: var(--space-4)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Absolute positioning
+@mixin absolute($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// Center element (absolute)
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Center element (flex)
+@mixin center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Hide text visually but keep it accessible for screen readers
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+// Clearfix
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+// Aspect ratio
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    padding-top: ($height / $width) * 100%;
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Strip unit from a number
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}

@@ -1,0 +1,164 @@
+/* Breakpoints */
+$breakpoints: (
+  'xs': 0,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+  'xxl': 1400px,
+);
+
+/* Media query mixins */
+@mixin media-breakpoint-up($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$breakpoint}. Available breakpoints are: #{map-keys($breakpoints)}";
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint) - 0.02px) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$breakpoint}. Available breakpoints are: #{map-keys($breakpoints)}";
+  }
+}
+
+@mixin media-breakpoint-between($lower, $upper) {
+  @if map-has-key($breakpoints, $lower) and map-has-key($breakpoints, $upper) {
+    @media (min-width: map-get($breakpoints, $lower)) and (max-width: map-get($breakpoints, $upper) - 0.02px) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$lower} or #{$upper}. Available breakpoints are: #{map-keys($breakpoints)}";
+  }
+}
+
+/* Focus styles */
+@mixin focus-ring {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-focus);
+}
+
+/* Truncate text with ellipsis */
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Flex helpers */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Grid helpers */
+@mixin grid-auto-fit($min-size: 250px, $gap: var(--spacing-4)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-size, 1fr));
+  gap: $gap;
+}
+
+/* Container queries */
+@mixin container-query($size) {
+  @container (min-width: $size) {
+    @content;
+  }
+}
+
+/* Typography */
+@mixin heading-1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+@mixin heading-2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+
+@mixin heading-3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+@mixin heading-4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+/* Animations */
+@mixin fade-in($duration: var(--transition-base)) {
+  animation: fadeIn $duration var(--transition-timing) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Accessibility */
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Card styles */
+@mixin card {
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-base);
+  padding: var(--spacing-4);
+  transition:
+    box-shadow var(--transition-base) var(--transition-timing),
+    transform var(--transition-base) var(--transition-timing);
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* Button reset */
+@mixin button-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: inherit;
+}

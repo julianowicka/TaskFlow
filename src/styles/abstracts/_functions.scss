@@ -1,0 +1,86 @@
+// Convert px to rem
+@function rem($pixels, $context: 16) {
+  @return ($pixels / $context) * 1rem;
+}
+
+// Convert px to em
+@function em($pixels, $context: 16) {
+  @return ($pixels / $context) * 1em;
+}
+
+// Color functions
+@function color-lighten($color, $percentage) {
+  @return color-mix(in srgb, $color, white $percentage);
+}
+
+@function color-darken($color, $percentage) {
+  @return color-mix(in srgb, $color, black $percentage);
+}
+
+// Z-index management
+$z-indexes: (
+  'dropdown': 1000,
+  'sticky': 1020,
+  'fixed': 1030,
+  'modal-backdrop': 1040,
+  'modal': 1050,
+  'popover': 1060,
+  'tooltip': 1070,
+);
+
+@function z($key) {
+  @return map-get($z-indexes, $key);
+}
+
+// Get color with opacity
+@function color-alpha($color, $opacity) {
+  @return rgba($color, $opacity);
+}
+
+// Calculate contrast ratio
+@function contrast-ratio($background, $foreground: white) {
+  $l1: luminance($background);
+  $l2: luminance(opaque($background, $foreground));
+
+  @if $l1 > $l2 {
+    @return ($l1 + 0.05) / ($l2 + 0.05);
+  } @else {
+    @return ($l2 + 0.05) / ($l1 + 0.05);
+  }
+}
+
+// Calculate luminance
+@function luminance($color) {
+  $red: nth(linear-channel($color), 1);
+  $green: nth(linear-channel($color), 2);
+  $blue: nth(linear-channel($color), 3);
+
+  @return 0.2126 * $red + 0.7152 * $green + 0.0722 * $blue;
+}
+
+// Helper for luminance calculation
+@function linear-channel($color) {
+  $r: red($color) / 255;
+  $g: green($color) / 255;
+  $b: blue($color) / 255;
+
+  $r: if($r <= 0.03928, $r / 12.92, pow(($r + 0.055) / 1.055, 2.4));
+  $g: if($g <= 0.03928, $g / 12.92, pow(($g + 0.055) / 1.055, 2.4));
+  $b: if($b <= 0.03928, $b / 12.92, pow(($b + 0.055) / 1.055, 2.4));
+
+  @return ($r, $g, $b);
+}
+
+// Get color that contrasts with background
+@function contrast-color($background, $dark: #000, $light: #fff) {
+  @if (contrast-ratio($background, $dark) >= 4.5) {
+    @return $dark;
+  } @else {
+    @return $light;
+  }
+}
+
+// Clamp a value between min and max
+@function clamp-value($value, $min, $max) {
+  @return max($min, min($max, $value));
+}

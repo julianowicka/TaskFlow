@@ -1,0 +1,253 @@
+// Grid layout system
+
+.grid {
+  display: grid;
+  gap: $grid-gap;
+
+  // Basic grid with columns
+  &--cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  &--cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  &--cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &--cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  &--cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  &--cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  &--cols-12 {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  // Auto-fit grids (responsive by default)
+  &--auto-sm {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  &--auto-md {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  &--auto-lg {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  // Gap variations
+  &--gap-0 {
+    gap: 0;
+  }
+  &--gap-1 {
+    gap: var(--space-1);
+  }
+  &--gap-2 {
+    gap: var(--space-2);
+  }
+  &--gap-3 {
+    gap: var(--space-3);
+  }
+  &--gap-4 {
+    gap: var(--space-4);
+  }
+  &--gap-6 {
+    gap: var(--space-6);
+  }
+  &--gap-8 {
+    gap: var(--space-8);
+  }
+
+  // Column gap
+  &--col-gap-0 {
+    column-gap: 0;
+  }
+  &--col-gap-2 {
+    column-gap: var(--space-2);
+  }
+  &--col-gap-4 {
+    column-gap: var(--space-4);
+  }
+  &--col-gap-6 {
+    column-gap: var(--space-6);
+  }
+
+  // Row gap
+  &--row-gap-0 {
+    row-gap: 0;
+  }
+  &--row-gap-2 {
+    row-gap: var(--space-2);
+  }
+  &--row-gap-4 {
+    row-gap: var(--space-4);
+  }
+  &--row-gap-6 {
+    row-gap: var(--space-6);
+  }
+}
+
+// Responsive grid layouts
+@include mq(sm) {
+  .grid {
+    &--sm-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    &--sm-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    &--sm-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}
+
+@include mq(md) {
+  .grid {
+    &--md-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    &--md-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    &--md-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    &--md-cols-6 {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+}
+
+@include mq(lg) {
+  .grid {
+    &--lg-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    &--lg-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    &--lg-cols-6 {
+      grid-template-columns: repeat(6, 1fr);
+    }
+    &--lg-cols-12 {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  }
+}
+
+// Grid column span utilities
+.col-span-1 {
+  grid-column: span 1;
+}
+.col-span-2 {
+  grid-column: span 2;
+}
+.col-span-3 {
+  grid-column: span 3;
+}
+.col-span-4 {
+  grid-column: span 4;
+}
+.col-span-5 {
+  grid-column: span 5;
+}
+.col-span-6 {
+  grid-column: span 6;
+}
+.col-span-7 {
+  grid-column: span 7;
+}
+.col-span-8 {
+  grid-column: span 8;
+}
+.col-span-9 {
+  grid-column: span 9;
+}
+.col-span-10 {
+  grid-column: span 10;
+}
+.col-span-11 {
+  grid-column: span 11;
+}
+.col-span-12 {
+  grid-column: span 12;
+}
+.col-span-full {
+  grid-column: 1 / -1;
+}
+
+// Grid row span utilities
+.row-span-1 {
+  grid-row: span 1;
+}
+.row-span-2 {
+  grid-row: span 2;
+}
+.row-span-3 {
+  grid-row: span 3;
+}
+.row-span-4 {
+  grid-row: span 4;
+}
+.row-span-5 {
+  grid-row: span 5;
+}
+.row-span-6 {
+  grid-row: span 6;
+}
+.row-span-full {
+  grid-row: 1 / -1;
+}
+
+// Responsive column spans
+@include mq(md) {
+  .md\:col-span-1 {
+    grid-column: span 1;
+  }
+  .md\:col-span-2 {
+    grid-column: span 2;
+  }
+  .md\:col-span-3 {
+    grid-column: span 3;
+  }
+  .md\:col-span-4 {
+    grid-column: span 4;
+  }
+  .md\:col-span-6 {
+    grid-column: span 6;
+  }
+  .md\:col-span-8 {
+    grid-column: span 8;
+  }
+  .md\:col-span-12 {
+    grid-column: span 12;
+  }
+}
+
+@include mq(lg) {
+  .lg\:col-span-1 {
+    grid-column: span 1;
+  }
+  .lg\:col-span-2 {
+    grid-column: span 2;
+  }
+  .lg\:col-span-3 {
+    grid-column: span 3;
+  }
+  .lg\:col-span-4 {
+    grid-column: span 4;
+  }
+  .lg\:col-span-6 {
+    grid-column: span 6;
+  }
+  .lg\:col-span-8 {
+    grid-column: span 8;
+  }
+  .lg\:col-span-12 {
+    grid-column: span 12;
+  }
+}

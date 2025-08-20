@@ -1,0 +1,151 @@
+/* CSS Custom Properties (Design Tokens) */
+:root {
+  /* Colors - Base HSL values */
+  --color-primary-h: 210;
+  --color-primary-s: 100%;
+  --color-primary-l: 50%;
+  --color-primary-hsl: var(--color-primary-h), var(--color-primary-s), var(--color-primary-l);
+
+  --color-secondary-h: 280;
+  --color-secondary-s: 80%;
+  --color-secondary-l: 60%;
+  --color-secondary-hsl:
+    var(--color-secondary-h), var(--color-secondary-s), var(--color-secondary-l);
+
+  --color-success-h: 120;
+  --color-success-s: 60%;
+  --color-success-l: 40%;
+  --color-success-hsl: var(--color-success-h), var(--color-success-s), var(--color-success-l);
+
+  --color-warning-h: 40;
+  --color-warning-s: 100%;
+  --color-warning-l: 50%;
+  --color-warning-hsl: var(--color-warning-h), var(--color-warning-s), var(--color-warning-l);
+
+  --color-danger-h: 0;
+  --color-danger-s: 80%;
+  --color-danger-l: 50%;
+  --color-danger-hsl: var(--color-danger-h), var(--color-danger-s), var(--color-danger-l);
+
+  --color-gray-h: 210;
+  --color-gray-s: 10%;
+  --color-gray-l: 50%;
+  --color-gray-hsl: var(--color-gray-h), var(--color-gray-s), var(--color-gray-l);
+
+  /* Light theme defaults (will be overridden in dark mode) */
+  --color-background: hsl(0, 0%, 100%);
+  --color-surface: hsl(0, 0%, 98%);
+  --color-surface-hover: hsl(0, 0%, 96%);
+  --color-surface-active: hsl(0, 0%, 94%);
+  --color-border: hsl(var(--color-gray-h), var(--color-gray-s), 85%);
+  --color-text: hsl(var(--color-gray-h), var(--color-gray-s), 10%);
+  --color-text-secondary: hsl(var(--color-gray-h), var(--color-gray-s), 40%);
+
+  /* Functional colors */
+  --color-primary: hsl(var(--color-primary-hsl));
+  --color-primary-hover: hsl(var(--color-primary-h), var(--color-primary-s), 45%);
+  --color-primary-active: hsl(var(--color-primary-h), var(--color-primary-s), 40%);
+  --color-primary-contrast: hsl(0, 0%, 100%);
+  --color-primary-focus: hsla(var(--color-primary-hsl), 0.25);
+
+  --color-secondary: hsl(var(--color-secondary-hsl));
+  --color-secondary-hover: hsl(var(--color-secondary-h), var(--color-secondary-s), 55%);
+  --color-secondary-active: hsl(var(--color-secondary-h), var(--color-secondary-s), 50%);
+  --color-secondary-contrast: hsl(0, 0%, 100%);
+
+  --color-success: hsl(var(--color-success-hsl));
+  --color-success-hover: hsl(var(--color-success-h), var(--color-success-s), 35%);
+  --color-success-active: hsl(var(--color-success-h), var(--color-success-s), 30%);
+  --color-success-contrast: hsl(0, 0%, 100%);
+
+  --color-warning: hsl(var(--color-warning-hsl));
+  --color-warning-hover: hsl(var(--color-warning-h), var(--color-warning-s), 45%);
+  --color-warning-active: hsl(var(--color-warning-h), var(--color-warning-s), 40%);
+  --color-warning-contrast: hsl(0, 0%, 10%);
+
+  --color-danger: hsl(var(--color-danger-hsl));
+  --color-danger-hover: hsl(var(--color-danger-h), var(--color-danger-s), 45%);
+  --color-danger-active: hsl(var(--color-danger-h), var(--color-danger-s), 40%);
+  --color-danger-contrast: hsl(0, 0%, 100%);
+
+  /* Typography */
+  --font-family-base:
+    'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-family-heading: var(--font-family-base);
+  --font-family-mono:
+    'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-2xl: 1.5rem; /* 24px */
+  --font-size-3xl: 1.875rem; /* 30px */
+  --font-size-4xl: 2.25rem; /* 36px */
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-base: 1.5;
+  --line-height-loose: 1.75;
+
+  /* Spacing */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem; /* 4px */
+  --spacing-2: 0.5rem; /* 8px */
+  --spacing-3: 0.75rem; /* 12px */
+  --spacing-4: 1rem; /* 16px */
+  --spacing-5: 1.25rem; /* 20px */
+  --spacing-6: 1.5rem; /* 24px */
+  --spacing-8: 2rem; /* 32px */
+  --spacing-10: 2.5rem; /* 40px */
+  --spacing-12: 3rem; /* 48px */
+  --spacing-16: 4rem; /* 64px */
+  --spacing-20: 5rem; /* 80px */
+  --spacing-24: 6rem; /* 96px */
+
+  /* Borders */
+  --border-radius-sm: 0.125rem; /* 2px */
+  --border-radius-base: 0.25rem; /* 4px */
+  --border-radius-md: 0.375rem; /* 6px */
+  --border-radius-lg: 0.5rem; /* 8px */
+  --border-radius-xl: 0.75rem; /* 12px */
+  --border-radius-full: 9999px;
+
+  --border-width-thin: 1px;
+  --border-width-base: 2px;
+  --border-width-thick: 4px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  /* Transitions */
+  --transition-fast: 150ms;
+  --transition-base: 250ms;
+  --transition-slow: 350ms;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Z-index */
+  --z-index-dropdown: 1000;
+  --z-index-sticky: 1020;
+  --z-index-fixed: 1030;
+  --z-index-modal-backdrop: 1040;
+  --z-index-modal: 1050;
+  --z-index-popover: 1060;
+  --z-index-tooltip: 1070;
+
+  /* Layout */
+  --container-max-width: 1280px;
+  --header-height: 4rem;
+  --sidebar-width: 16rem;
+}

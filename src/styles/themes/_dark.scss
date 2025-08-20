@@ -1,0 +1,78 @@
+// Dark theme variables
+
+.theme-dark {
+  // Base colors
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  // Background colors
+  --color-bg: #121212;
+  --color-surface: #1e1e1e;
+  --color-surface-hover: #2c2c2c;
+  --color-surface-active: #383838;
+
+  // Text colors
+  --color-text: #e9ecef;
+  --color-text-secondary: #adb5bd;
+  --color-text-tertiary: #6c757d;
+  --color-text-disabled: #495057;
+
+  // Brand colors
+  --color-primary: #3d8bfd;
+  --color-primary-hover: #6ea8fe;
+  --color-primary-active: #9ec5fe;
+  --color-primary-100: #031633;
+  --color-primary-200: #052c65;
+  --color-primary-300: #084298;
+  --color-primary-400: #0a58ca;
+  --color-primary-500: #0d6efd;
+  --color-primary-600: #3d8bfd;
+  --color-primary-700: #6ea8fe;
+  --color-primary-800: #9ec5fe;
+  --color-primary-900: #cfe2ff;
+
+  // Semantic colors
+  --color-success: #20c997;
+  --color-success-hover: #2fd4a2;
+  --color-success-active: #3eddad;
+  --color-success-100: #051b11;
+  --color-success-500: #20c997;
+  --color-success-900: #d1e7dd;
+
+  --color-warning: #ffc107;
+  --color-warning-hover: #ffca2c;
+  --color-warning-active: #ffcd39;
+  --color-warning-100: #664d03;
+  --color-warning-500: #ffc107;
+  --color-warning-900: #fff3cd;
+
+  --color-danger: #fa5252;
+  --color-danger-hover: #ff6b6b;
+  --color-danger-active: #ff8787;
+  --color-danger-100: #58151c;
+  --color-danger-500: #fa5252;
+  --color-danger-900: #f8d7da;
+
+  --color-info: #0dcaf0;
+  --color-info-hover: #3dd5f3;
+  --color-info-active: #76e0f7;
+  --color-info-100: #055160;
+  --color-info-500: #0dcaf0;
+  --color-info-900: #cff4fc;
+
+  // Border colors
+  --color-border: #495057;
+  --color-border-hover: #6c757d;
+  --color-border-active: #adb5bd;
+
+  // Focus ring color
+  --color-focus: rgba(61, 139, 253, 0.5);
+
+  // Shadows
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-base: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+}

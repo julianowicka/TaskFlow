@@ -1,0 +1,224 @@
+// Typography scale and helper classes
+
+// Font families
+.font-sans {
+  font-family: var(--font-family-base);
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
+}
+
+// Font sizes
+.text-xs {
+  font-size: var(--font-size-xs);
+}
+
+.text-sm {
+  font-size: var(--font-size-sm);
+}
+
+.text-base {
+  font-size: var(--font-size-base);
+}
+
+.text-lg {
+  font-size: var(--font-size-lg);
+}
+
+.text-xl {
+  font-size: var(--font-size-xl);
+}
+
+.text-2xl {
+  font-size: var(--font-size-2xl);
+}
+
+.text-3xl {
+  font-size: var(--font-size-3xl);
+}
+
+.text-4xl {
+  font-size: var(--font-size-4xl);
+}
+
+// Font weights
+.font-normal {
+  font-weight: var(--font-weight-normal);
+}
+
+.font-medium {
+  font-weight: var(--font-weight-medium);
+}
+
+.font-semibold {
+  font-weight: var(--font-weight-semibold);
+}
+
+.font-bold {
+  font-weight: var(--font-weight-bold);
+}
+
+// Line heights
+.leading-none {
+  line-height: var(--line-height-none);
+}
+
+.leading-tight {
+  line-height: var(--line-height-tight);
+}
+
+.leading-snug {
+  line-height: var(--line-height-snug);
+}
+
+.leading-normal {
+  line-height: var(--line-height-normal);
+}
+
+.leading-relaxed {
+  line-height: var(--line-height-relaxed);
+}
+
+.leading-loose {
+  line-height: var(--line-height-loose);
+}
+
+// Text alignment
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+// Text transforms
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.normal-case {
+  text-transform: none;
+}
+
+// Text decoration
+.underline {
+  text-decoration: underline;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.no-underline {
+  text-decoration: none;
+}
+
+// Text overflow
+.truncate {
+  @extend %truncate;
+}
+
+.truncate-2 {
+  @extend %truncate-2;
+}
+
+.truncate-3 {
+  @extend %truncate-3;
+}
+
+// Letter spacing
+.tracking-tighter {
+  letter-spacing: -0.05em;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
+}
+
+.tracking-normal {
+  letter-spacing: 0;
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
+.tracking-wider {
+  letter-spacing: 0.05em;
+}
+
+.tracking-widest {
+  letter-spacing: 0.1em;
+}
+
+// Responsive typography
+.responsive-text-sm {
+  @include fluid-type(var(--font-size-xs), var(--font-size-sm));
+}
+
+.responsive-text-base {
+  @include fluid-type(var(--font-size-sm), var(--font-size-base));
+}
+
+.responsive-text-lg {
+  @include fluid-type(var(--font-size-base), var(--font-size-lg));
+}
+
+.responsive-text-xl {
+  @include fluid-type(var(--font-size-lg), var(--font-size-xl));
+}
+
+.responsive-text-2xl {
+  @include fluid-type(var(--font-size-xl), var(--font-size-2xl));
+}
+
+.responsive-text-3xl {
+  @include fluid-type(var(--font-size-2xl), var(--font-size-3xl));
+}
+
+.responsive-text-4xl {
+  @include fluid-type(var(--font-size-3xl), var(--font-size-4xl));
+}
+
+// Text colors
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-success {
+  color: var(--color-success);
+}
+
+.text-warning {
+  color: var(--color-warning);
+}
+
+.text-danger {
+  color: var(--color-danger);
+}
+
+.text-info {
+  color: var(--color-info);
+}

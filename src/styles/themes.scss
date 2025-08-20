@@ -1,0 +1,55 @@
+/* Light theme is defined in tokens.scss as the default */
+
+/* Dark theme */
+[data-theme='dark'] {
+  /* Dark mode background and surface colors */
+  --color-background: hsl(220, 20%, 10%);
+  --color-surface: hsl(220, 16%, 15%);
+  --color-surface-hover: hsl(220, 16%, 18%);
+  --color-surface-active: hsl(220, 16%, 20%);
+  --color-border: hsl(220, 16%, 22%);
+  --color-text: hsl(220, 10%, 90%);
+  --color-text-secondary: hsl(220, 10%, 70%);
+
+  /* Adjust shadows for dark mode */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+
+  /* Slightly adjust primary color for better contrast in dark mode */
+  --color-primary-l: 55%;
+  --color-primary-hover: hsl(var(--color-primary-h), var(--color-primary-s), 50%);
+  --color-primary-active: hsl(var(--color-primary-h), var(--color-primary-s), 45%);
+
+  /* Adjust focus ring for dark mode */
+  --color-primary-focus: hsla(var(--color-primary-hsl), 0.35);
+}
+
+/* High contrast theme */
+[data-theme='high-contrast'] {
+  --color-background: hsl(0, 0%, 0%);
+  --color-surface: hsl(0, 0%, 10%);
+  --color-surface-hover: hsl(0, 0%, 15%);
+  --color-surface-active: hsl(0, 0%, 20%);
+  --color-border: hsl(0, 0%, 30%);
+  --color-text: hsl(0, 0%, 100%);
+  --color-text-secondary: hsl(0, 0%, 80%);
+
+  /* Increase contrast for primary colors */
+  --color-primary-h: 210;
+  --color-primary-s: 100%;
+  --color-primary-l: 60%;
+  --color-primary-hover: hsl(var(--color-primary-h), var(--color-primary-s), 70%);
+  --color-primary-active: hsl(var(--color-primary-h), var(--color-primary-s), 80%);
+  --color-primary-contrast: hsl(0, 0%, 0%);
+
+  /* Increase focus visibility */
+  --color-primary-focus: hsla(var(--color-primary-hsl), 0.5);
+
+  /* Increase border widths */
+  --border-width-thin: 2px;
+  --border-width-base: 3px;
+  --border-width-thick: 5px;
+}

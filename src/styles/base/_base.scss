@@ -1,0 +1,201 @@
+// Base styles for HTML elements
+
+// Box sizing
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// Document
+html {
+  font-size: 16px;
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+// Body
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100%;
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+}
+
+// Paragraphs
+p {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+}
+
+// Links
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast) var(--transition-timing);
+
+  &:hover {
+    color: color-mix(in oklab, var(--color-primary) 80%, white);
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    @extend %focus-ring;
+  }
+}
+
+// Lists
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-6);
+}
+
+// Blockquotes
+blockquote {
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border-left: var(--border-width-thick) solid var(--color-primary-200);
+  background-color: color-mix(in srgb, var(--color-primary) 5%, var(--color-surface));
+}
+
+// Code
+code,
+pre {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+}
+
+code {
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in srgb, var(--color-text) 10%, transparent);
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  overflow: auto;
+  border-radius: var(--radius-md);
+  background-color: color-mix(in srgb, var(--color-text) 5%, var(--color-surface));
+
+  code {
+    padding: 0;
+    background-color: transparent;
+  }
+}
+
+// Horizontal rule
+hr {
+  height: var(--border-width-thin);
+  margin: var(--space-6) 0;
+  border: 0;
+  background-color: var(--color-border);
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+// Tables
+table {
+  width: 100%;
+  margin-bottom: var(--space-4);
+  border-collapse: collapse;
+}
+
+th {
+  padding: var(--space-2) var(--space-3);
+  text-align: left;
+  font-weight: var(--font-weight-semibold);
+  border-bottom: var(--border-width-normal) solid var(--color-border);
+}
+
+td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-width-thin) solid var(--color-border);
+}
+
+// Form elements
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+// Focus styles
+:focus-visible {
+  @extend %focus-ring;
+  outline-offset: 2px;
+}
+
+// Selection
+::selection {
+  background-color: color-mix(in srgb, var(--color-primary) 40%, transparent);
+  color: var(--color-text);
+}

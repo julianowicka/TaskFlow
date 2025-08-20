@@ -1,0 +1,49 @@
+// Container layout styles
+
+.container {
+  width: 100%;
+  max-width: $container-max;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+
+  &--sm {
+    max-width: $bp-sm;
+  }
+
+  &--md {
+    max-width: $bp-md;
+  }
+
+  &--lg {
+    max-width: $bp-lg;
+  }
+
+  &--xl {
+    max-width: $bp-xl;
+  }
+
+  &--fluid {
+    max-width: 100%;
+  }
+
+  &--narrow {
+    max-width: 65ch;
+  }
+}
+
+// Responsive container padding
+@include mq(md) {
+  .container {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+@include mq(lg) {
+  .container {
+    padding-left: var(--space-8);
+    padding-right: var(--space-8);
+  }
+}

@@ -1,0 +1,65 @@
+/**
+ * TaskFlow - Main Stylesheet
+ * 
+ * This is the main entry point for all styles in the TaskFlow application.
+ * It follows a modular architecture inspired by the 7-1 pattern.
+ */
+
+// 1. Abstracts
+// Contains variables, functions, mixins, and placeholders
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+@import 'abstracts/placeholders';
+
+// 2. Vendors
+// Contains third-party styles (empty for now, add as needed)
+// @import 'vendors/normalize';
+
+// 3. Base
+// Contains reset, typography, and base element styles
+@import 'base/base';
+@import 'base/typography';
+@import 'base/utilities';
+
+// 4. Layout
+// Contains layout-specific styles
+@import 'layout/container';
+@import 'layout/grid';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/main';
+
+// 5. Components
+// Contains component-specific styles
+// These will be added as components are developed
+// @import 'components/buttons';
+// @import 'components/forms';
+// @import 'components/cards';
+// @import 'components/modals';
+
+// 6. Pages
+// Contains page-specific styles
+// @import 'pages/home';
+// @import 'pages/tasks';
+// @import 'pages/profile';
+
+// 7. Themes
+// Contains theme-specific styles
+@import 'themes/light';
+@import 'themes/dark';
+
+/**
+ * Theme toggle functionality
+ * 
+ * The app uses a class on the html/body element to toggle between themes.
+ * By default, we use the light theme.
+ * 
+ * To support system preferences, we use the prefers-color-scheme media query
+ * and add a .theme-auto class that respects the system preference.
+ */
+@media (prefers-color-scheme: dark) {
+  .theme-auto {
+    @extend .theme-dark;
+  }
+}
