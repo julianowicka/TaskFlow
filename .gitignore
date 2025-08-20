@@ -27,3 +27,7 @@ tmp/
 playwright-report
 test-results
 coverage
+
+.tsbuildinfo
+.angular-compiler.db
+.lock 

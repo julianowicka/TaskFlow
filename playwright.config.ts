@@ -14,7 +14,7 @@ export default defineConfig({
   webServer: {
     // Budujemy produkcyjnie i serwujemy statycznie (stabilniejsze E2E)
     command:
-      'sh -c "pnpm build --configuration=production && pnpm dlx http-server dist/taskflow/browser -p 4200 --silent"',
+      'sh -c "npm run build -- --configuration=production && npx http-server dist/taskflow/browser -p 4200 --silent"',
     port: 4200,
     reuseExistingServer: true,
     timeout: 120_000,
