@@ -1,6 +1,30 @@
 # Taskflow
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
+**Zarządzaj projektami jak profesjonalista!** Taskflow to nowoczesna aplikacja do zarządzania zadaniami w stylu Kanban, która pozwala tworzyć tablice projektowe, organizować zadania w kolumnach i śledzić postęp w czasie rzeczywistym. Idealna dla zespołów, freelancerów i każdego, kto chce uporządkować swoją pracę.
+
+## 🚀 Technologie i architektura
+
+Aplikacja została zbudowana z wykorzystaniem najnowszych technologii webowych, tworząc solidną i skalowalną architekturę:
+
+- **Angular 20** - najnowsza wersja frameworka z pełnym wsparciem dla standalone components i nowoczesnych wzorców
+- **TypeScript 5.8** - silne typowanie zapewniające bezpieczeństwo kodu i lepsze doświadczenie deweloperskie
+- **Angular CDK** - komponenty i narzędzia do budowania dostępnych interfejsów użytkownika
+- **RxJS** - reaktywne programowanie dla zarządzania stanem i asynchronicznych operacji
+- **SCSS** - zaawansowane style z systemem designu i tematami (light/dark mode)
+- **Playwright** - nowoczesne testy E2E z pełnym wsparciem dla różnych przeglądarek
+- **ESLint + Prettier** - automatyczne formatowanie i linting kodu
+- **Husky + lint-staged** - pre-commit hooks zapewniające jakość kodu
+
+### Architektura aplikacji
+
+Aplikacja wykorzystuje **feature-based architecture** z podziałem na:
+
+- **Core** - serwisy globalne, guardy, interceptory i komponenty wspólne
+- **Features** - moduły funkcjonalne (auth, board, task, column, user)
+- **Shared** - komponenty UI, dyrektywy, pipe'y i utilities
+- **Standalone components** - nowoczesne podejście Angular bez NgModules
+
+Stan aplikacji jest zarządzany przez **reaktywne serwisy** z wykorzystaniem RxJS, zapewniając spójność danych i optymalną wydajność.
 
 ## Development server
 
