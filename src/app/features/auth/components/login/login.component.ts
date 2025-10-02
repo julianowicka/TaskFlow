@@ -159,7 +159,7 @@ export class LoginComponent {
     // Submit form
     this.isLoading = true;
 
-    this.authService.login(this.email, this.password).subscribe({
+    this.authService.login({ email: this.email, password: this.password }).subscribe({
       next: () => {
         this.router.navigate(['/boards']);
       },

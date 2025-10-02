@@ -199,15 +199,17 @@ export class RegisterComponent {
     // Submit form
     this.isLoading = true;
 
-    this.authService.register(this.name, this.email, this.password).subscribe({
-      next: () => {
-        this.router.navigate(['/boards']);
-      },
-      error: (error) => {
-        this.formError = error.message || 'Registration failed. Please try again.';
-        this.isLoading = false;
-      },
-    });
+    this.authService
+      .register({ name: this.name, email: this.email, password: this.password })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/boards']);
+        },
+        error: (error) => {
+          this.formError = error.message || 'Registration failed. Please try again.';
+          this.isLoading = false;
+        },
+      });
   }
 
   private isValidEmail(email: string): boolean {

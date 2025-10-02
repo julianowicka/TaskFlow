@@ -232,6 +232,7 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
 })
 export class UserProfileComponent implements OnInit {
   user = {
+    id: '',
     name: '',
     email: '',
   };
@@ -244,9 +245,11 @@ export class UserProfileComponent implements OnInit {
 
   isLoading = false;
   isPasswordLoading = false;
+  isDeleting = false;
 
   nameError = '';
   emailError = '';
+  deleteError = '';
 
   currentPasswordError = '';
   newPasswordError = '';
@@ -259,6 +262,7 @@ export class UserProfileComponent implements OnInit {
     // Get user data from auth service
     const userData = this.authService.getCurrentUser();
     if (userData) {
+      this.user.id = userData.id;
       this.user.name = userData.name;
       this.user.email = userData.email;
     }
@@ -300,7 +304,7 @@ export class UserProfileComponent implements OnInit {
           // Show success message
           alert('Profile updated successfully');
         },
-        error: (error) => {
+        error: (error: any) => {
           this.isLoading = false;
           this.nameError = error.message || 'Failed to update profile';
         },
@@ -360,7 +364,7 @@ export class UserProfileComponent implements OnInit {
             // Show success message
             alert('Password changed successfully');
           },
-          error: (error) => {
+          error: (error: any) => {
             this.isPasswordLoading = false;
             this.passwordFormError = error.message || 'Failed to change password';
           },
@@ -376,8 +380,9 @@ export class UserProfileComponent implements OnInit {
           // Redirect to login page
           window.location.href = '/auth/login';
         },
-        error: (error) => {
-          alert(error.message || 'Failed to delete account');
+        error: (error: any) => {
+          this.isDeleting = false;
+          this.deleteError = error.message || 'Failed to delete account';
         },
       });
     }

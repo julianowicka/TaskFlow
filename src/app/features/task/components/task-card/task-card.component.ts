@@ -152,6 +152,28 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
           font-weight: var(--font-weight-medium);
         }
       }
+
+      // Drag & Drop styles
+      .cdk-drag-preview {
+        box-shadow: var(--shadow-lg);
+        transform: rotate(2deg);
+        border-radius: var(--border-radius-base);
+      }
+
+      .cdk-drag-placeholder {
+        opacity: 0.3;
+        border: 2px dashed var(--color-primary);
+        border-radius: var(--border-radius-base);
+        background: var(--color-surface-hover);
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .cdk-drag-animating {
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+      }
     `,
   ],
 })

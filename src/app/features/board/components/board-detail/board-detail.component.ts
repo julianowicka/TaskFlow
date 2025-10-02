@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { Subscription } from 'rxjs';
 
 import { BoardStore } from '../../services/board.store';
@@ -21,6 +22,7 @@ import { ColumnComponent } from '../../../column/components/column/column.compon
     CommonModule,
     RouterModule,
     FormsModule,
+    CdkDropListGroup,
     ButtonComponent,
     IconComponent,
     CardComponent,
@@ -53,11 +55,12 @@ import { ColumnComponent } from '../../../column/components/column/column.compon
           </ng-container>
 
           <ng-template #columnsContent>
-            <div class="columns-wrapper">
+            <div class="columns-wrapper" cdkDropListGroup>
               <div *ngFor="let column of columnStore.columnsByBoard()" class="column-wrapper">
                 <app-column
                   [column]="column"
                   [tasks]="taskStore.tasksByColumn()[column.id] || []"
+                  [dropListIds]="getDropListIds()"
                 ></app-column>
               </div>
 
@@ -209,6 +212,24 @@ import { ColumnComponent } from '../../../column/components/column/column.compon
           }
         }
       }
+
+      // Drag & Drop styles
+      .columns-wrapper {
+        &.cdk-drop-list-dragging {
+          .column-wrapper {
+            transition: all 200ms ease;
+          }
+        }
+      }
+
+      .column-wrapper {
+        &.cdk-drop-list-receiving {
+          background-color: var(--color-surface-hover);
+          border: 2px dashed var(--color-primary);
+          border-radius: var(--border-radius-lg);
+          transition: all 200ms ease;
+        }
+      }
     `,
   ],
 })
@@ -253,5 +274,9 @@ export class BoardDetailComponent implements OnInit, OnDestroy {
   cancelAddColumn(): void {
     this.showAddColumn = false;
     this.newColumnTitle = '';
+  }
+
+  getDropListIds(): string[] {
+    return this.columnStore.columnsByBoard().map((column) => column.id);
   }
 }

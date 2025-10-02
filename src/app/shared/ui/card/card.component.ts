@@ -8,14 +8,15 @@ import { NgClass, CommonModule } from '@angular/common';
   template: `
     <div
       class="ui-card"
-      [ngClass]="[
-        {
-          'ui-card--hoverable': hoverable,
-          'ui-card--bordered': bordered,
-          'ui-card--flat': flat,
-        },
-        'ui-card--' + padding,
-      ]"
+      [ngClass]="{
+        'ui-card--hoverable': hoverable,
+        'ui-card--bordered': bordered,
+        'ui-card--flat': flat,
+        'ui-card--none': padding === 'none',
+        'ui-card--small': padding === 'small',
+        'ui-card--medium': padding === 'medium',
+        'ui-card--large': padding === 'large',
+      }"
     >
       <div *ngIf="title || subtitle" class="ui-card__header">
         <h3 *ngIf="title" class="ui-card__title">{{ title }}</h3>

@@ -1,6 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {
+  CdkDropList,
+  CdkDropListGroup,
+  CdkDrag,
+  CdkDragDrop,
+  DragDropModule,
+} from '@angular/cdk/drag-drop';
 import { Column } from '../../models/column.model';
 import { Task } from '../../../task/models/task.model';
 import { ColumnStore } from '../../services/column.store';
@@ -16,6 +23,7 @@ import { TaskCardComponent } from '../../../task/components/task-card/task-card.
   imports: [
     CommonModule,
     FormsModule,
+    DragDropModule,
     CardComponent,
     ButtonComponent,
     IconComponent,
@@ -56,11 +64,20 @@ import { TaskCardComponent } from '../../../task/components/task-card/task-card.
       </div>
 
       <div class="column-content">
-        <div class="tasks-container">
+        <div
+          class="tasks-container"
+          cdkDropList
+          [cdkDropListData]="tasks"
+          [cdkDropListConnectedTo]="dropListIds"
+          (cdkDropListDropped)="onTaskDrop($event)"
+          [cdkDropListDisabled]="false"
+        >
           <app-task-card
             *ngFor="let task of tasks"
             [task]="task"
+            cdkDrag
             (click)="openTaskDetail(task.id)"
+            class="task-card-draggable"
           ></app-task-card>
 
           <div
@@ -236,12 +253,55 @@ import { TaskCardComponent } from '../../../task/components/task-card/task-card.
           margin-top: var(--spacing-2);
         }
       }
+
+      // Drag & Drop styles
+      .task-card-draggable {
+        cursor: grab;
+
+        &:active {
+          cursor: grabbing;
+        }
+
+        &.cdk-drag-preview {
+          box-shadow: var(--shadow-lg);
+          border-radius: var(--border-radius-base);
+          transform: rotate(5deg);
+        }
+
+        &.cdk-drag-placeholder {
+          opacity: 0.3;
+          border: 2px dashed var(--color-primary);
+          border-radius: var(--border-radius-base);
+          background: var(--color-surface-hover);
+          min-height: 80px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        &.cdk-drag-animating {
+          transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+        }
+      }
+
+      .tasks-container {
+        &.cdk-drop-list-dragging .task-card-draggable:not(.cdk-drag-placeholder) {
+          transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+        }
+
+        &.cdk-drop-list-receiving {
+          background-color: var(--color-surface-hover);
+          border: 2px dashed var(--color-primary);
+          border-radius: var(--border-radius-base);
+        }
+      }
     `,
   ],
 })
 export class ColumnComponent {
   @Input() column!: Column;
   @Input() tasks: Task[] = [];
+  @Input() dropListIds: string[] = [];
 
   isEditingTitle = false;
   editableTitle = '';
@@ -258,7 +318,8 @@ export class ColumnComponent {
     this.editableTitle = this.column.title;
     this.isEditingTitle = true;
     setTimeout(() => {
-      document.querySelector('.column-title-input')?.focus();
+      const input = document.querySelector('.column-title-input') as HTMLInputElement;
+      input?.focus();
     }, 0);
   }
 
@@ -278,7 +339,8 @@ export class ColumnComponent {
     this.isAddingTask = true;
     this.newTaskTitle = '';
     setTimeout(() => {
-      document.querySelector('.task-title-input')?.focus();
+      const input = document.querySelector('.task-title-input') as HTMLTextAreaElement;
+      input?.focus();
     }, 0);
   }
 
@@ -298,5 +360,23 @@ export class ColumnComponent {
     this.taskStore.selectTask(taskId);
     // This will be implemented with a modal or navigation
     console.log('Open task detail', taskId);
+  }
+
+  onTaskDrop(event: CdkDragDrop<Task[]>): void {
+    if (event.previousContainer === event.container) {
+      // Reordering within the same column
+      this.taskStore.reorderTasksInColumn(this.column.id, event.previousIndex, event.currentIndex);
+    } else {
+      // Moving task to different column
+      const task = event.previousContainer.data[event.previousIndex];
+      const newColumnId = this.column.id;
+
+      this.taskStore.moveTaskToColumn(
+        task.id,
+        event.previousContainer.id,
+        newColumnId,
+        event.currentIndex,
+      );
+    }
   }
 }
