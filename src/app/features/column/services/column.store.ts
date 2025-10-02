@@ -47,6 +47,11 @@ export class ColumnStore {
       // For now, we're just using the data from localStorage
       // No need to do anything here since we loaded in the constructor
 
+      // If no columns exist, create some test data
+      if (this.columns().length === 0) {
+        this.createTestData(boardId);
+      }
+
       // Simulate API delay
       setTimeout(() => {
         this.loading.set(false);
@@ -104,6 +109,14 @@ export class ColumnStore {
     }
   }
 
+  updateTaskOrder(columnId: string, taskIds: string[]): void {
+    this.columns.update((columns) =>
+      columns.map((column) =>
+        column.id === columnId ? { ...column, taskIds, updatedAt: new Date() } : column,
+      ),
+    );
+  }
+
   deleteColumn(id: string): void {
     this.loading.set(true);
     this.error.set(null);
@@ -134,14 +147,6 @@ export class ColumnStore {
       this.error.set('Failed to delete column');
       this.loading.set(false);
     }
-  }
-
-  updateTaskOrder(columnId: string, taskIds: string[]): void {
-    this.columns.update((columns) =>
-      columns.map((column) =>
-        column.id === columnId ? { ...column, taskIds, updatedAt: new Date() } : column,
-      ),
-    );
   }
 
   moveTask(
@@ -178,6 +183,41 @@ export class ColumnStore {
         return column;
       }),
     );
+  }
+
+  // Create test data for development
+  private createTestData(boardId: string): void {
+    const testColumns: Column[] = [
+      {
+        id: 'col-1',
+        title: 'To Do',
+        boardId,
+        taskIds: ['task-1', 'task-2', 'task-3'],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        color: '#3b82f6',
+      },
+      {
+        id: 'col-2',
+        title: 'In Progress',
+        boardId,
+        taskIds: ['task-4', 'task-5'],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        color: '#f59e0b',
+      },
+      {
+        id: 'col-3',
+        title: 'Done',
+        boardId,
+        taskIds: ['task-6'],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        color: '#10b981',
+      },
+    ];
+
+    this.columns.set(testColumns);
   }
 
   // Local storage methods

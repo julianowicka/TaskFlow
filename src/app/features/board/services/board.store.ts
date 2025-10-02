@@ -54,6 +54,11 @@ export class BoardStore {
       // For now, we're just using the data from localStorage
       // No need to do anything here since we loaded in the constructor
 
+      // If no boards exist, create some test data
+      if (this.boards().length === 0) {
+        this.createTestData();
+      }
+
       // Simulate API delay
       setTimeout(() => {
         this.loading.set(false);
@@ -105,6 +110,14 @@ export class BoardStore {
     }
   }
 
+  updateColumnOrder(boardId: string, columnOrder: string[]): void {
+    this.boards.update((boards) =>
+      boards.map((board) =>
+        board.id === boardId ? { ...board, columnOrder, updatedAt: new Date() } : board,
+      ),
+    );
+  }
+
   deleteBoard(id: string): void {
     this.loading.set(true);
     this.error.set(null);
@@ -126,14 +139,6 @@ export class BoardStore {
 
   selectBoard(id: string | null): void {
     this.selectedBoardId.set(id);
-  }
-
-  updateColumnOrder(boardId: string, columnOrder: string[]): void {
-    this.boards.update((boards) =>
-      boards.map((board) =>
-        board.id === boardId ? { ...board, columnOrder, updatedAt: new Date() } : board,
-      ),
-    );
   }
 
   // Local storage methods
@@ -175,5 +180,22 @@ export class BoardStore {
     } catch (err) {
       console.error('Failed to save boards to localStorage', err);
     }
+  }
+
+  // Create test data for development
+  private createTestData(): void {
+    const testBoard: Board = {
+      id: 'board-1',
+      title: 'Project Alpha',
+      description: 'Main development board for the new application',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      ownerId: 'current-user',
+      isArchived: false,
+      columnOrder: ['col-1', 'col-2', 'col-3'],
+    };
+
+    this.boards.set([testBoard]);
+    this.selectedBoardId.set('board-1');
   }
 }

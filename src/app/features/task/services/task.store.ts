@@ -60,6 +60,11 @@ export class TaskStore {
       // For now, we're just using the data from localStorage
       // No need to do anything here since we loaded in the constructor
 
+      // If no tasks exist, create some test data
+      if (this.tasks().length === 0) {
+        this.createTestData(boardId);
+      }
+
       // Simulate API delay
       setTimeout(() => {
         this.loading.set(false);
@@ -68,6 +73,107 @@ export class TaskStore {
       this.error.set('Failed to load tasks');
       this.loading.set(false);
     }
+  }
+
+  // Create test data for development
+  private createTestData(boardId: string): void {
+    const testTasks: Task[] = [
+      {
+        id: 'task-1',
+        title: 'Design user interface',
+        description: 'Create wireframes and mockups for the new dashboard',
+        columnId: 'col-1',
+        boardId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        priority: 'high',
+        status: 'todo',
+        labels: [
+          { id: 'label-1', name: 'Design', color: '#3b82f6' },
+          { id: 'label-2', name: 'UI/UX', color: '#8b5cf6' },
+        ],
+        checklist: [
+          { id: '1', text: 'Create wireframes', isCompleted: false, createdAt: new Date() },
+          { id: '2', text: 'Design mockups', isCompleted: false, createdAt: new Date() },
+        ],
+      },
+      {
+        id: 'task-2',
+        title: 'Set up development environment',
+        description: 'Install and configure all necessary development tools',
+        columnId: 'col-1',
+        boardId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        priority: 'medium',
+        status: 'todo',
+        labels: [{ id: 'label-3', name: 'Setup', color: '#10b981' }],
+        checklist: [],
+      },
+      {
+        id: 'task-3',
+        title: 'Write API documentation',
+        description: 'Document all API endpoints and their usage',
+        columnId: 'col-1',
+        boardId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        priority: 'low',
+        status: 'todo',
+        labels: [{ id: 'label-4', name: 'Documentation', color: '#f59e0b' }],
+        checklist: [],
+      },
+      {
+        id: 'task-4',
+        title: 'Implement authentication',
+        description: 'Build login and registration system',
+        columnId: 'col-2',
+        boardId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        priority: 'high',
+        status: 'in-progress',
+        labels: [
+          { id: 'label-5', name: 'Backend', color: '#ef4444' },
+          { id: 'label-6', name: 'Security', color: '#8b5cf6' },
+        ],
+        checklist: [
+          { id: '1', text: 'Set up JWT tokens', isCompleted: true, createdAt: new Date() },
+          { id: '2', text: 'Implement login endpoint', isCompleted: false, createdAt: new Date() },
+        ],
+      },
+      {
+        id: 'task-5',
+        title: 'Create database schema',
+        description: 'Design and implement the database structure',
+        columnId: 'col-2',
+        boardId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        priority: 'medium',
+        status: 'in-progress',
+        labels: [{ id: 'label-7', name: 'Database', color: '#06b6d4' }],
+        checklist: [],
+      },
+      {
+        id: 'task-6',
+        title: 'Project setup',
+        description: 'Initialize the project structure and basic configuration',
+        columnId: 'col-3',
+        boardId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        priority: 'medium',
+        status: 'done',
+        labels: [{ id: 'label-8', name: 'Setup', color: '#10b981' }],
+        checklist: [
+          { id: '1', text: 'Create project structure', isCompleted: true, createdAt: new Date() },
+          { id: '2', text: 'Configure build tools', isCompleted: true, createdAt: new Date() },
+        ],
+      },
+    ];
+
+    this.tasks.set(testTasks);
   }
 
   createTask(
@@ -238,6 +344,45 @@ export class TaskStore {
     const updatedChecklist = task.checklist.filter((item) => item.id !== itemId);
 
     this.updateTask(taskId, { checklist: updatedChecklist });
+  }
+
+  // Drag & Drop methods
+  reorderTasksInColumn(columnId: string, previousIndex: number, currentIndex: number): void {
+    const columns = this.columnStore.allColumns();
+    const column = columns.find((col) => col.id === columnId);
+
+    if (!column) return;
+
+    const taskIds = [...column.taskIds];
+    const [movedTaskId] = taskIds.splice(previousIndex, 1);
+    taskIds.splice(currentIndex, 0, movedTaskId);
+
+    this.columnStore.updateTaskOrder(columnId, taskIds);
+  }
+
+  moveTaskToColumn(
+    taskId: string,
+    previousColumnId: string,
+    newColumnId: string,
+    newIndex: number,
+  ): void {
+    const columns = this.columnStore.allColumns();
+    const previousColumn = columns.find((col) => col.id === previousColumnId);
+    const newColumn = columns.find((col) => col.id === newColumnId);
+
+    if (!previousColumn || !newColumn) return;
+
+    // Remove from previous column
+    const previousTaskIds = previousColumn.taskIds.filter((id) => id !== taskId);
+    this.columnStore.updateTaskOrder(previousColumnId, previousTaskIds);
+
+    // Add to new column at specific position
+    const newTaskIds = [...newColumn.taskIds];
+    newTaskIds.splice(newIndex, 0, taskId);
+    this.columnStore.updateTaskOrder(newColumnId, newTaskIds);
+
+    // Update task's columnId
+    this.updateTask(taskId, { columnId: newColumnId });
   }
 
   // Local storage methods

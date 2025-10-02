@@ -199,4 +199,53 @@ export class AuthService {
       }, 1000); // Simulate network delay
     });
   }
+
+  // User profile methods
+  getCurrentUser(): User | null {
+    return this.userSignal();
+  }
+
+  updateUserProfile(user: User): Observable<User> {
+    return new Observable<User>((observer) => {
+      setTimeout(() => {
+        // Update local user data
+        this.userSignal.set(user);
+        localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+
+        observer.next(user);
+        observer.complete();
+      }, 1000);
+    });
+  }
+
+  changePassword(currentPassword: string, newPassword: string): Observable<void> {
+    return new Observable<void>((observer) => {
+      setTimeout(() => {
+        // In a real app, this would validate current password and update
+        if (currentPassword.length < 6) {
+          observer.error(new Error('Current password is incorrect'));
+          return;
+        }
+
+        if (newPassword.length < 6) {
+          observer.error(new Error('New password must be at least 6 characters'));
+          return;
+        }
+
+        observer.next();
+        observer.complete();
+      }, 1000);
+    });
+  }
+
+  deleteAccount(): Observable<void> {
+    return new Observable<void>((observer) => {
+      setTimeout(() => {
+        // Clear all data and logout
+        this.logout();
+        observer.next();
+        observer.complete();
+      }, 1000);
+    });
+  }
 }
