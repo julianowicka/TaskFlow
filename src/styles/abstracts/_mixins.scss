@@ -27,6 +27,63 @@
   }
 }
 
+// Bootstrap-style media query mixins for compatibility
+@mixin media-breakpoint-up($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: #{$bp-xs}) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (min-width: #{$bp-sm}) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: #{$bp-md}) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: #{$bp-lg}) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (min-width: #{$bp-xl}) {
+      @content;
+    }
+  } @else if $breakpoint == 2xl {
+    @media (min-width: #{$bp-2xl}) {
+      @content;
+    }
+  }
+}
+
+@mixin media-breakpoint-down($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$bp-xs - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (max-width: #{$bp-sm - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: #{$bp-md - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: #{$bp-lg - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: #{$bp-xl - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 2xl {
+    @media (max-width: #{$bp-2xl - 1px}) {
+      @content;
+    }
+  }
+}
+
 // Fluid typography
 @mixin fluid-type(
   $min-font-size,
