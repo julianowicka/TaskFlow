@@ -1,6 +1,7 @@
 import { Injectable, computed, effect, signal } from '@angular/core';
 import { Column } from '../models/column.model';
 import { BoardStore } from '../../board/services/board.store';
+import { ApiService } from '../../../core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,10 @@ export class ColumnStore {
   readonly isLoading = computed(() => this.loading());
   readonly errorMessage = computed(() => this.error());
 
-  constructor(private boardStore: BoardStore) {
+  constructor(
+    private boardStore: BoardStore,
+    private apiService: ApiService,
+  ) {
     // Initialize from localStorage if available
     this.loadFromLocalStorage();
 
@@ -42,41 +46,34 @@ export class ColumnStore {
     this.loading.set(true);
     this.error.set(null);
 
-    try {
-      // In a real app, this would be an API call
-      // For now, we're just using the data from localStorage
-      // No need to do anything here since we loaded in the constructor
-
-      // If no columns exist, create some test data
-      if (this.columns().length === 0) {
+    // Simulate API call
+    setTimeout(() => {
+      // Create test data if none exists for this board
+      const existingColumns = this.columns().filter((col) => col.boardId === boardId);
+      if (existingColumns.length === 0) {
         this.createTestData(boardId);
       }
-
-      // Simulate API delay
-      setTimeout(() => {
-        this.loading.set(false);
-      }, 500);
-    } catch (err) {
-      this.error.set('Failed to load columns');
       this.loading.set(false);
-    }
+    }, 300);
   }
 
   createColumn(boardId: string, title: string, color?: string): void {
     this.loading.set(true);
     this.error.set(null);
 
-    try {
-      const newColumn: Column = {
-        id: crypto.randomUUID(),
-        title,
-        boardId,
-        taskIds: [],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        color,
-      };
+    const newColumn: Column = {
+      id: `col-${Date.now()}`,
+      title,
+      boardId,
+      taskIds: [],
+      position: this.columns().filter((col) => col.boardId === boardId).length,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      color: color || '#3b82f6',
+    };
 
+    // Simulate API call
+    setTimeout(() => {
       this.columns.update((columns) => [...columns, newColumn]);
 
       // Update the board's columnOrder
@@ -86,10 +83,7 @@ export class ColumnStore {
       }
 
       this.loading.set(false);
-    } catch (err) {
-      this.error.set('Failed to create column');
-      this.loading.set(false);
-    }
+    }, 300);
   }
 
   updateColumn(id: string, updates: Partial<Column>): void {
@@ -99,7 +93,9 @@ export class ColumnStore {
     try {
       this.columns.update((columns) =>
         columns.map((column) =>
-          column.id === id ? { ...column, ...updates, updatedAt: new Date() } : column,
+          column.id === id
+            ? { ...column, ...updates, updatedAt: new Date().toISOString() }
+            : column,
         ),
       );
       this.loading.set(false);
@@ -112,7 +108,9 @@ export class ColumnStore {
   updateTaskOrder(columnId: string, taskIds: string[]): void {
     this.columns.update((columns) =>
       columns.map((column) =>
-        column.id === columnId ? { ...column, taskIds, updatedAt: new Date() } : column,
+        column.id === columnId
+          ? { ...column, taskIds, updatedAt: new Date().toISOString() }
+          : column,
       ),
     );
   }
@@ -175,10 +173,10 @@ export class ColumnStore {
     this.columns.update((columns) =>
       columns.map((column) => {
         if (column.id === sourceColumnId) {
-          return { ...column, taskIds: newSourceTaskIds, updatedAt: new Date() };
+          return { ...column, taskIds: newSourceTaskIds, updatedAt: new Date().toISOString() };
         }
         if (column.id === destinationColumnId) {
-          return { ...column, taskIds: newDestinationTaskIds, updatedAt: new Date() };
+          return { ...column, taskIds: newDestinationTaskIds, updatedAt: new Date().toISOString() };
         }
         return column;
       }),
@@ -193,8 +191,9 @@ export class ColumnStore {
         title: 'To Do',
         boardId,
         taskIds: ['task-1', 'task-2', 'task-3'],
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        position: 0,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         color: '#3b82f6',
       },
       {
@@ -202,8 +201,9 @@ export class ColumnStore {
         title: 'In Progress',
         boardId,
         taskIds: ['task-4', 'task-5'],
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        position: 1,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         color: '#f59e0b',
       },
       {
@@ -211,8 +211,9 @@ export class ColumnStore {
         title: 'Done',
         boardId,
         taskIds: ['task-6'],
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        position: 2,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         color: '#10b981',
       },
     ];
@@ -227,12 +228,8 @@ export class ColumnStore {
       if (storedColumns) {
         const parsedColumns = JSON.parse(storedColumns);
 
-        // Convert string dates back to Date objects
-        const columns = parsedColumns.map((column: any) => ({
-          ...column,
-          createdAt: new Date(column.createdAt),
-          updatedAt: new Date(column.updatedAt),
-        }));
+        // Keep dates as strings for API compatibility
+        const columns = parsedColumns;
 
         this.columns.set(columns);
       }

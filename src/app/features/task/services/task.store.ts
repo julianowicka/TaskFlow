@@ -1,6 +1,7 @@
 import { Injectable, computed, effect, signal } from '@angular/core';
 import { Task, TaskPriority, TaskStatus } from '../models/task.model';
 import { ColumnStore } from '../../column/services/column.store';
+import { ApiService } from '../../../core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,10 @@ export class TaskStore {
   readonly isLoading = computed(() => this.loading());
   readonly errorMessage = computed(() => this.error());
 
-  constructor(private columnStore: ColumnStore) {
+  constructor(
+    private columnStore: ColumnStore,
+    private apiService: ApiService,
+  ) {
     // Initialize from localStorage if available
     this.loadFromLocalStorage();
 
@@ -55,24 +59,15 @@ export class TaskStore {
     this.loading.set(true);
     this.error.set(null);
 
-    try {
-      // In a real app, this would be an API call
-      // For now, we're just using the data from localStorage
-      // No need to do anything here since we loaded in the constructor
-
-      // If no tasks exist, create some test data
-      if (this.tasks().length === 0) {
+    // Simulate API call
+    setTimeout(() => {
+      // Create test data if none exists for this board
+      const existingTasks = this.tasks().filter((task) => task.boardId === boardId);
+      if (existingTasks.length === 0) {
         this.createTestData(boardId);
       }
-
-      // Simulate API delay
-      setTimeout(() => {
-        this.loading.set(false);
-      }, 500);
-    } catch (err) {
-      this.error.set('Failed to load tasks');
       this.loading.set(false);
-    }
+    }, 300);
   }
 
   // Create test data for development
@@ -84,8 +79,8 @@ export class TaskStore {
         description: 'Create wireframes and mockups for the new dashboard',
         columnId: 'col-1',
         boardId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         priority: 'high',
         status: 'todo',
         labels: [
@@ -93,8 +88,18 @@ export class TaskStore {
           { id: 'label-2', name: 'UI/UX', color: '#8b5cf6' },
         ],
         checklist: [
-          { id: '1', text: 'Create wireframes', isCompleted: false, createdAt: new Date() },
-          { id: '2', text: 'Design mockups', isCompleted: false, createdAt: new Date() },
+          {
+            id: '1',
+            text: 'Create wireframes',
+            isCompleted: false,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: '2',
+            text: 'Design mockups',
+            isCompleted: false,
+            createdAt: new Date().toISOString(),
+          },
         ],
       },
       {
@@ -103,8 +108,8 @@ export class TaskStore {
         description: 'Install and configure all necessary development tools',
         columnId: 'col-1',
         boardId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         priority: 'medium',
         status: 'todo',
         labels: [{ id: 'label-3', name: 'Setup', color: '#10b981' }],
@@ -116,8 +121,8 @@ export class TaskStore {
         description: 'Document all API endpoints and their usage',
         columnId: 'col-1',
         boardId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         priority: 'low',
         status: 'todo',
         labels: [{ id: 'label-4', name: 'Documentation', color: '#f59e0b' }],
@@ -129,8 +134,8 @@ export class TaskStore {
         description: 'Build login and registration system',
         columnId: 'col-2',
         boardId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         priority: 'high',
         status: 'in-progress',
         labels: [
@@ -138,8 +143,18 @@ export class TaskStore {
           { id: 'label-6', name: 'Security', color: '#8b5cf6' },
         ],
         checklist: [
-          { id: '1', text: 'Set up JWT tokens', isCompleted: true, createdAt: new Date() },
-          { id: '2', text: 'Implement login endpoint', isCompleted: false, createdAt: new Date() },
+          {
+            id: '1',
+            text: 'Set up JWT tokens',
+            isCompleted: true,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: '2',
+            text: 'Implement login endpoint',
+            isCompleted: false,
+            createdAt: new Date().toISOString(),
+          },
         ],
       },
       {
@@ -148,8 +163,8 @@ export class TaskStore {
         description: 'Design and implement the database structure',
         columnId: 'col-2',
         boardId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         priority: 'medium',
         status: 'in-progress',
         labels: [{ id: 'label-7', name: 'Database', color: '#06b6d4' }],
@@ -161,14 +176,24 @@ export class TaskStore {
         description: 'Initialize the project structure and basic configuration',
         columnId: 'col-3',
         boardId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         priority: 'medium',
         status: 'done',
         labels: [{ id: 'label-8', name: 'Setup', color: '#10b981' }],
         checklist: [
-          { id: '1', text: 'Create project structure', isCompleted: true, createdAt: new Date() },
-          { id: '2', text: 'Configure build tools', isCompleted: true, createdAt: new Date() },
+          {
+            id: '1',
+            text: 'Create project structure',
+            isCompleted: true,
+            createdAt: new Date().toISOString(),
+          },
+          {
+            id: '2',
+            text: 'Configure build tools',
+            isCompleted: true,
+            createdAt: new Date().toISOString(),
+          },
         ],
       },
     ];
@@ -194,8 +219,8 @@ export class TaskStore {
         description,
         columnId,
         boardId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
         priority,
         status,
         labels: [],
@@ -256,7 +281,7 @@ export class TaskStore {
       // Update the task
       this.tasks.update((tasks) =>
         tasks.map((task) =>
-          task.id === id ? { ...task, ...updates, updatedAt: new Date() } : task,
+          task.id === id ? { ...task, ...updates, updatedAt: new Date().toISOString() } : task,
         ),
       );
 
@@ -318,7 +343,7 @@ export class TaskStore {
       id: crypto.randomUUID(),
       text,
       isCompleted: false,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
     };
 
     this.updateTask(taskId, {
@@ -392,22 +417,8 @@ export class TaskStore {
       if (storedTasks) {
         const parsedTasks = JSON.parse(storedTasks);
 
-        // Convert string dates back to Date objects
-        const tasks = parsedTasks.map((task: any) => ({
-          ...task,
-          createdAt: new Date(task.createdAt),
-          updatedAt: new Date(task.updatedAt),
-          dueDate: task.dueDate ? new Date(task.dueDate) : undefined,
-          checklist: task.checklist.map((item: any) => ({
-            ...item,
-            createdAt: new Date(item.createdAt),
-          })),
-          comments: task.comments?.map((comment: any) => ({
-            ...comment,
-            createdAt: new Date(comment.createdAt),
-            updatedAt: comment.updatedAt ? new Date(comment.updatedAt) : undefined,
-          })),
-        }));
+        // Keep dates as strings for API compatibility
+        const tasks = parsedTasks;
 
         this.tasks.set(tasks);
       }

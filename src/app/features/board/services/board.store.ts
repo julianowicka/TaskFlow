@@ -1,5 +1,7 @@
 import { Injectable, computed, effect, signal } from '@angular/core';
 import { Board, BoardSummary } from '../models/board.model';
+import { ApiService } from '../../../core/services/api.service';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +36,10 @@ export class BoardStore {
   readonly isLoading = computed(() => this.loading());
   readonly errorMessage = computed(() => this.error());
 
-  constructor() {
+  constructor(
+    private apiService: ApiService,
+    private notificationService: NotificationService,
+  ) {
     // Initialize from localStorage if available
     this.loadFromLocalStorage();
 
@@ -45,84 +50,75 @@ export class BoardStore {
   }
 
   // Actions
-  loadBoards(): void {
+  loadBoards(ownerId: string = 'current-user'): void {
     this.loading.set(true);
     this.error.set(null);
 
-    try {
-      // In a real app, this would be an API call
-      // For now, we're just using the data from localStorage
-      // No need to do anything here since we loaded in the constructor
-
-      // If no boards exist, create some test data
+    // Simulate API call with timeout
+    setTimeout(() => {
+      // Create some sample boards if none exist
       if (this.boards().length === 0) {
         this.createTestData();
       }
-
-      // Simulate API delay
-      setTimeout(() => {
-        this.loading.set(false);
-      }, 500);
-    } catch (err) {
-      this.error.set('Failed to load boards');
       this.loading.set(false);
-    }
+    }, 500);
   }
 
   createBoard(title: string, description?: string): void {
     this.loading.set(true);
     this.error.set(null);
 
-    try {
-      const newBoard: Board = {
-        id: crypto.randomUUID(),
-        title,
-        description,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        ownerId: 'current-user', // In a real app, this would be the current user's ID
-        isArchived: false,
-        columnOrder: [],
-      };
+    const newBoard: Board = {
+      id: `board-${Date.now()}`,
+      title,
+      description,
+      ownerId: 'current-user',
+      isArchived: false,
+      columnOrder: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
 
+    // Simulate API call
+    setTimeout(() => {
       this.boards.update((boards) => [...boards, newBoard]);
       this.loading.set(false);
-    } catch (err) {
-      this.error.set('Failed to create board');
-      this.loading.set(false);
-    }
+      this.notificationService.success('Success', 'Board created successfully');
+    }, 300);
   }
 
   updateBoard(id: string, updates: Partial<Board>): void {
     this.loading.set(true);
     this.error.set(null);
 
-    try {
+    // Simulate API call
+    setTimeout(() => {
       this.boards.update((boards) =>
-        boards.map((board) =>
-          board.id === id ? { ...board, ...updates, updatedAt: new Date() } : board,
+        boards.map((b) =>
+          b.id === id ? { ...b, ...updates, updatedAt: new Date().toISOString() } : b,
         ),
       );
       this.loading.set(false);
-    } catch (err) {
-      this.error.set('Failed to update board');
-      this.loading.set(false);
-    }
+    }, 300);
   }
 
   updateColumnOrder(boardId: string, columnOrder: string[]): void {
-    this.boards.update((boards) =>
-      boards.map((board) =>
-        board.id === boardId ? { ...board, columnOrder, updatedAt: new Date() } : board,
-      ),
-    );
+    // Simulate API call
+    setTimeout(() => {
+      this.boards.update((boards) =>
+        boards.map((b) =>
+          b.id === boardId ? { ...b, columnOrder, updatedAt: new Date().toISOString() } : b,
+        ),
+      );
+    }, 300);
   }
 
   deleteBoard(id: string): void {
     this.loading.set(true);
     this.error.set(null);
 
-    try {
+    // Simulate API call
+    setTimeout(() => {
       this.boards.update((boards) => boards.filter((board) => board.id !== id));
 
       // If the deleted board was selected, clear the selection
@@ -131,10 +127,8 @@ export class BoardStore {
       }
 
       this.loading.set(false);
-    } catch (err) {
-      this.error.set('Failed to delete board');
-      this.loading.set(false);
-    }
+      this.notificationService.success('Success', 'Board deleted successfully');
+    }, 300);
   }
 
   selectBoard(id: string | null): void {
@@ -148,12 +142,8 @@ export class BoardStore {
       if (storedBoards) {
         const parsedBoards = JSON.parse(storedBoards);
 
-        // Convert string dates back to Date objects
-        const boards = parsedBoards.map((board: any) => ({
-          ...board,
-          createdAt: new Date(board.createdAt),
-          updatedAt: new Date(board.updatedAt),
-        }));
+        // Keep dates as strings for API compatibility
+        const boards = parsedBoards;
 
         this.boards.set(boards);
       }
@@ -188,8 +178,8 @@ export class BoardStore {
       id: 'board-1',
       title: 'Project Alpha',
       description: 'Main development board for the new application',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       ownerId: 'current-user',
       isArchived: false,
       columnOrder: ['col-1', 'col-2', 'col-3'],
