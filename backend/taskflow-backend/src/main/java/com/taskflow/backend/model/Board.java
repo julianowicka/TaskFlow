@@ -98,3 +98,4 @@ public class Board {
         this.updatedAt = updatedAt;
     }
 }
+

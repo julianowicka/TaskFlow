@@ -12,3 +12,4 @@ public interface TaskRepository extends MongoRepository<Task, String> {
     List<Task> findByColumnId(String columnId);
     List<Task> findByAssigneeId(String assigneeId);
 }
+

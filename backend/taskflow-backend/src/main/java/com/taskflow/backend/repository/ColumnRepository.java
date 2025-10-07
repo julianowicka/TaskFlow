@@ -11,3 +11,4 @@ public interface ColumnRepository extends MongoRepository<Column, String> {
     List<Column> findByBoardIdOrderByPosition(String boardId);
     List<Column> findByBoardId(String boardId);
 }
+

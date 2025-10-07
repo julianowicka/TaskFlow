@@ -15,6 +15,8 @@ public class Column {
     private String boardId;
     private List<String> taskIds;
     private int position;
+    private Integer limit; // Optional WIP limit
+    private String color; // Optional color for the column
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
@@ -86,5 +88,21 @@ public class Column {
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public Integer getLimit() {
+        return limit;
+    }
+    
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+    
+    public String getColor() {
+        return color;
+    }
+    
+    public void setColor(String color) {
+        this.color = color;
     }
 }

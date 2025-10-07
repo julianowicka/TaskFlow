@@ -11,3 +11,4 @@ public interface BoardRepository extends MongoRepository<Board, String> {
     List<Board> findByOwnerIdAndIsArchivedFalse(String ownerId);
     List<Board> findByOwnerId(String ownerId);
 }
+
