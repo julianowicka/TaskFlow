@@ -14,12 +14,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
       [disabled]="disabled || loading"
       [attr.aria-label]="ariaLabel || null"
       [attr.data-testid]="testId || null"
-      [ngClass]="[
-        'ui-button',
-        'ui-button--' + variant,
-        'ui-button--' + size,
-        { 'ui-button--loading': loading, 'ui-button--full-width': fullWidth },
-      ]"
+      [ngClass]="getButtonClasses()"
       (click)="onClick($event)"
     >
       <span class="ui-button__content" [class.ui-button__content--hidden]="loading">
@@ -202,5 +197,19 @@ export class ButtonComponent {
 
   onClick(event: MouseEvent): void {
     this.buttonClick.emit(event);
+  }
+
+  getButtonClasses(): string {
+    const classes = ['ui-button', `ui-button--${this.variant}`, `ui-button--${this.size}`];
+
+    if (this.loading) {
+      classes.push('ui-button--loading');
+    }
+
+    if (this.fullWidth) {
+      classes.push('ui-button--full-width');
+    }
+
+    return classes.join(' ');
   }
 }
