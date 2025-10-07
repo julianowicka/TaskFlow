@@ -1,22 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './core/components/header/header.component';
-import { FooterComponent } from './core/components/footer/footer.component';
+import { NotificationComponent } from './core/components/notification/notification.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, NotificationComponent],
   styleUrls: ['./app.component.scss'],
-  template: `
-    <div class="app-container">
-      <app-header></app-header>
-      <main class="app-content">
-        <router-outlet></router-outlet>
-      </main>
-      <app-footer></app-footer>
-    </div>
-  `,
+  templateUrl: './app.html',
 })
 export class AppComponent {
   title = 'TaskFlow';
