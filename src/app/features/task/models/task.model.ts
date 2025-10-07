@@ -11,7 +11,7 @@ export interface ChecklistItem {
   id: string;
   text: string;
   isCompleted: boolean;
-  createdAt: Date;
+  createdAt: string; // Changed to string for API compatibility
 }
 
 export interface Task {
@@ -20,9 +20,9 @@ export interface Task {
   description?: string;
   columnId: string;
   boardId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  dueDate?: Date;
+  createdAt: string; // Changed to string for API compatibility
+  updatedAt: string; // Changed to string for API compatibility
+  dueDate?: string; // Changed to string for API compatibility
   assigneeId?: string;
   priority: TaskPriority;
   status: TaskStatus;
@@ -37,6 +37,6 @@ export interface TaskComment {
   taskId: string;
   userId: string;
   text: string;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: string; // Changed to string for API compatibility
+  updatedAt?: string; // Changed to string for API compatibility
 }

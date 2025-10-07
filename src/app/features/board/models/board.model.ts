@@ -2,8 +2,8 @@ export interface Board {
   id: string;
   title: string;
   description?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string; // Changed to string for API compatibility
+  updatedAt: string; // Changed to string for API compatibility
   ownerId: string;
   isArchived: boolean;
   columnOrder: string[]; // Array of column IDs in their display order
@@ -15,5 +15,5 @@ export interface BoardSummary {
   description?: string;
   columnCount: number;
   taskCount: number;
-  updatedAt: Date;
+  updatedAt: string; // Changed to string for API compatibility
 }
