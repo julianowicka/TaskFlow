@@ -55,6 +55,11 @@ import { InputComponent } from '../../../../shared/ui/input/input.component';
 
         <div class="auth-footer">
           <p>Don't have an account? <a routerLink="/auth/register">Register</a></p>
+          <div class="skip-login">
+            <ui-button variant="text" size="sm" (buttonClick)="skipLogin()">
+              Skip Login (Development)
+            </ui-button>
+          </div>
         </div>
       </ui-card>
     </div>
@@ -114,6 +119,12 @@ import { InputComponent } from '../../../../shared/ui/input/input.component';
             text-decoration: underline;
           }
         }
+
+        .skip-login {
+          margin-top: var(--spacing-4);
+          padding-top: var(--spacing-4);
+          border-top: 1px solid var(--color-border);
+        }
       }
     `,
   ],
@@ -159,13 +170,25 @@ export class LoginComponent {
     // Submit form
     this.isLoading = true;
 
-    this.authService.login({ email: this.email, password: this.password }).subscribe({
+    this.authService.simulateLogin(this.email, this.password).subscribe({
       next: () => {
         this.router.navigate(['/boards']);
       },
       error: (error) => {
         this.formError = error.message || 'Invalid email or password';
         this.isLoading = false;
+      },
+    });
+  }
+
+  skipLogin(): void {
+    // Simulate login with dummy data for development
+    this.authService.simulateLogin('dev@taskflow.com', 'password').subscribe({
+      next: () => {
+        this.router.navigate(['/boards']);
+      },
+      error: (error) => {
+        this.formError = error.message || 'Failed to skip login';
       },
     });
   }

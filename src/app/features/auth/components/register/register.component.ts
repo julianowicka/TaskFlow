@@ -73,6 +73,11 @@ import { InputComponent } from '../../../../shared/ui/input/input.component';
 
         <div class="auth-footer">
           <p>Already have an account? <a routerLink="/auth/login">Login</a></p>
+          <div class="skip-login">
+            <ui-button variant="text" size="sm" (buttonClick)="skipLogin()">
+              Skip Login (Development)
+            </ui-button>
+          </div>
         </div>
       </ui-card>
     </div>
@@ -131,6 +136,12 @@ import { InputComponent } from '../../../../shared/ui/input/input.component';
           &:hover {
             text-decoration: underline;
           }
+        }
+
+        .skip-login {
+          margin-top: var(--spacing-4);
+          padding-top: var(--spacing-4);
+          border-top: 1px solid var(--color-border);
         }
       }
     `,
@@ -199,17 +210,27 @@ export class RegisterComponent {
     // Submit form
     this.isLoading = true;
 
-    this.authService
-      .register({ name: this.name, email: this.email, password: this.password })
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/boards']);
-        },
-        error: (error) => {
-          this.formError = error.message || 'Registration failed. Please try again.';
-          this.isLoading = false;
-        },
-      });
+    this.authService.simulateRegister(this.name, this.email, this.password).subscribe({
+      next: () => {
+        this.router.navigate(['/boards']);
+      },
+      error: (error) => {
+        this.formError = error.message || 'Registration failed. Please try again.';
+        this.isLoading = false;
+      },
+    });
+  }
+
+  skipLogin(): void {
+    // Simulate login with dummy data for development
+    this.authService.simulateLogin('dev@taskflow.com', 'password').subscribe({
+      next: () => {
+        this.router.navigate(['/boards']);
+      },
+      error: (error) => {
+        this.formError = error.message || 'Failed to skip login';
+      },
+    });
   }
 
   private isValidEmail(email: string): boolean {
