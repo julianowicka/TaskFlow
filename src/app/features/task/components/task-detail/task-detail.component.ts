@@ -466,8 +466,9 @@ export class TaskDetailComponent implements OnInit {
 
   updateDueDate(date: Date | null): void {
     if (!this.task) return;
-    this.editableTask.dueDate = date || undefined;
-    this.taskStore.updateTask(this.task.id, { dueDate: date || undefined });
+    const dateString = date ? date.toISOString() : undefined;
+    this.editableTask.dueDate = dateString;
+    this.taskStore.updateTask(this.task.id, { dueDate: dateString });
   }
 
   formatDate(date: Date | string): string {
@@ -497,7 +498,7 @@ export class TaskDetailComponent implements OnInit {
       id: crypto.randomUUID(),
       text: this.newChecklistItemText.trim(),
       isCompleted: false,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString(),
     };
 
     // Initialize checklist array if it doesn't exist

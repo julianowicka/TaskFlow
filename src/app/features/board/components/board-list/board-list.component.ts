@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { BoardStore } from '../../services/board.store';
 import { CardComponent } from '../../../../shared/ui/card/card.component';
 import { ButtonComponent } from '../../../../shared/ui/button/button.component';
@@ -128,13 +128,16 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
   ],
 })
 export class BoardListComponent implements OnInit {
-  constructor(public boardStore: BoardStore) {}
+  constructor(
+    public boardStore: BoardStore,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.boardStore.loadBoards();
   }
 
-  formatDate(date: Date): string {
+  formatDate(date: string): string {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
@@ -143,8 +146,7 @@ export class BoardListComponent implements OnInit {
   }
 
   navigateToBoard(boardId: string): void {
-    // This will be implemented with router navigation
-    this.boardStore.selectBoard(boardId);
+    this.router.navigate(['/boards', boardId]);
   }
 
   openCreateBoardModal(): void {
