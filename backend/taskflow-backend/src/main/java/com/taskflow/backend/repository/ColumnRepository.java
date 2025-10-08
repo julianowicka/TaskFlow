@@ -12,3 +12,4 @@ public interface ColumnRepository extends MongoRepository<Column, String> {
     List<Column> findByBoardId(String boardId);
 }
 
+

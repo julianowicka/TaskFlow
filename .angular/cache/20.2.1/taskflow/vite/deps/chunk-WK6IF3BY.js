@@ -1076,9 +1076,8 @@ function checkFullData(data) {
 function getLocaleExtraDayPeriodRules(locale) {
   const data = findLocaleData(locale);
   checkFullData(data);
-  const rules =
-    data[LocaleDataIndex.ExtraData][2] || [];
-    /* ɵExtraLocaleDataIndex.ExtraDayPeriodsRules */
+  const rules = data[LocaleDataIndex.ExtraData][2] || [];
+  /* ɵExtraLocaleDataIndex.ExtraDayPeriodsRules */
   return rules.map((rule) => {
     if (typeof rule === 'string') {
       return extractTime(rule);
@@ -1119,9 +1118,8 @@ function extractTime(time) {
 }
 function getCurrencySymbol(code, format, locale = 'en') {
   const currency = getLocaleCurrencies(locale)[code] || CURRENCIES_EN[code] || [];
-  const symbolNarrow =
-    currency[1];
-    /* ɵCurrencyIndex.SymbolNarrow */
+  const symbolNarrow = currency[1];
+  /* ɵCurrencyIndex.SymbolNarrow */
   if (format === 'narrow' && typeof symbolNarrow === 'string') {
     return symbolNarrow;
   }
@@ -1135,9 +1133,8 @@ function getNumberOfCurrencyDigits(code) {
   let digits;
   const currency = CURRENCIES_EN[code];
   if (currency) {
-    digits =
-      currency[2];
-      /* ɵCurrencyIndex.NbOfDigits */
+    digits = currency[2];
+    /* ɵCurrencyIndex.NbOfDigits */
   }
   return typeof digits === 'number' ? digits : DEFAULT_NB_OF_CURRENCY_DIGITS;
 }

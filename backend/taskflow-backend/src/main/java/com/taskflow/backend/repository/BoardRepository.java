@@ -12,3 +12,4 @@ public interface BoardRepository extends MongoRepository<Board, String> {
     List<Board> findByOwnerId(String ownerId);
 }
 
+
