@@ -11,9 +11,9 @@ import { IconComponent } from '../../../shared/ui/icon/icon.component';
   imports: [CommonModule, RouterModule, CardComponent, ButtonComponent, IconComponent],
   template: `
     <div class="not-found-container">
-      <ui-card [padding]="'large'" class="not-found-card">
+      <app-ui-card [padding]="'large'" class="not-found-card">
         <div class="not-found-icon">
-          <ui-icon name="search" [size]="'48'"></ui-icon>
+          <app-ui-icon name="search" [size]="'48'"></app-ui-icon>
         </div>
 
         <h1 class="not-found-title">Page Not Found</h1>
@@ -23,10 +23,10 @@ import { IconComponent } from '../../../shared/ui/icon/icon.component';
         </p>
 
         <div class="not-found-actions">
-          <ui-button [routerLink]="['/']">Go to Home</ui-button>
-          <ui-button variant="text" (buttonClick)="goBack()">Go Back</ui-button>
+          <app-ui-button [routerLink]="['/']">Go to Home</app-ui-button>
+          <app-ui-button variant="text" (buttonClick)="goBack()">Go Back</app-ui-button>
         </div>
-      </ui-card>
+      </app-ui-card>
     </div>
   `,
   styles: [

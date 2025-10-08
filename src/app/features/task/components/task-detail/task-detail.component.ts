@@ -21,7 +21,7 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   styleUrls: ['./task-detail.component.scss'],
   template: `
-    <ui-modal
+    <app-ui-modal
       *ngIf="isOpen"
       (modalClose)="closeModal()"
       [title]="task?.title || 'Task Details'"
@@ -87,7 +87,7 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
                   </div>
                   <div class="checklist-actions">
                     <button class="icon-button" (click)="deleteChecklistItem(item)">
-                      <ui-icon name="trash-2" [size]="'16'"></ui-icon>
+                      <app-ui-icon name="trash-2" [size]="'16'"></app-ui-icon>
                     </button>
                   </div>
                 </div>
@@ -105,22 +105,22 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
                   />
                 </div>
                 <div class="add-checklist-actions">
-                  <ui-button size="sm" (buttonClick)="addChecklistItem()">Add</ui-button>
-                  <ui-button variant="text" size="sm" (buttonClick)="cancelAddChecklistItem()"
-                    >Cancel</ui-button
+                  <app-ui-button size="sm" (buttonClick)="addChecklistItem()">Add</app-ui-button>
+                  <app-ui-button variant="text" size="sm" (buttonClick)="cancelAddChecklistItem()"
+                    >Cancel</app-ui-button
                   >
                 </div>
               </div>
 
-              <ui-button
+              <app-ui-button
                 *ngIf="!isAddingChecklistItem"
                 variant="text"
                 size="sm"
                 (buttonClick)="startAddingChecklistItem()"
               >
-                <ui-icon name="plus"></ui-icon>
+                <app-ui-icon name="plus"></app-ui-icon>
                 Add Item
-              </ui-button>
+              </app-ui-button>
             </div>
 
             <div class="task-comments-section">
@@ -176,19 +176,19 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
             </div>
 
             <div class="sidebar-actions">
-              <ui-button variant="danger" size="sm" (buttonClick)="deleteTask()">
-                <ui-icon name="trash"></ui-icon>
+              <app-ui-button variant="danger" size="sm" (buttonClick)="deleteTask()">
+                <app-ui-icon name="trash"></app-ui-icon>
                 Delete Task
-              </ui-button>
+              </app-ui-button>
             </div>
           </div>
         </div>
       </div>
 
       <div class="modal-footer" slot="footer">
-        <ui-button variant="text" (buttonClick)="closeModal()">Close</ui-button>
+        <app-ui-button variant="text" (buttonClick)="closeModal()">Close</app-ui-button>
       </div>
-    </ui-modal>
+    </app-ui-modal>
   `,
   styles: [
     `

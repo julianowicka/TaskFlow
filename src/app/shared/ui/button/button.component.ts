@@ -5,7 +5,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'danger' | 'wa
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 @Component({
-  selector: 'ui-button',
+  selector: 'app-ui-button',
   standalone: true,
   imports: [CommonModule, NgClass],
   template: `

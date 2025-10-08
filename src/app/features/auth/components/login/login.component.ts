@@ -20,48 +20,48 @@ import { InputComponent } from '../../../../shared/ui/input/input.component';
   ],
   template: `
     <div class="auth-container">
-      <ui-card [padding]="'large'" class="auth-card">
+      <app-ui-card [padding]="'large'" class="auth-card">
         <h1 class="auth-title">Login to TaskFlow</h1>
 
         <form (ngSubmit)="login()" #loginForm="ngForm" class="auth-form">
-          <ui-input
+          <app-ui-input
             label="Email"
             [(ngModel)]="email"
             name="email"
             type="email"
             [required]="true"
             [error]="emailError"
-          ></ui-input>
+          ></app-ui-input>
 
-          <ui-input
+          <app-ui-input
             label="Password"
             [(ngModel)]="password"
             name="password"
             type="password"
             [required]="true"
             [error]="passwordError"
-          ></ui-input>
+          ></app-ui-input>
 
           <div class="form-error" *ngIf="formError">
             {{ formError }}
           </div>
 
           <div class="form-actions">
-            <ui-button type="submit" [fullWidth]="true" [disabled]="isLoading">
+            <app-ui-button type="submit" [fullWidth]="true" [disabled]="isLoading">
               {{ isLoading ? 'Logging in...' : 'Login' }}
-            </ui-button>
+            </app-ui-button>
           </div>
         </form>
 
         <div class="auth-footer">
           <p>Don't have an account? <a routerLink="/auth/register">Register</a></p>
           <div class="skip-login">
-            <ui-button variant="text" size="sm" (buttonClick)="skipLogin()">
+            <app-ui-button variant="text" size="sm" (buttonClick)="skipLogin()">
               Skip Login (Development)
-            </ui-button>
+            </app-ui-button>
           </div>
         </div>
-      </ui-card>
+      </app-ui-card>
     </div>
   `,
   styles: [

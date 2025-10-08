@@ -9,7 +9,7 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
   standalone: true,
   imports: [CommonModule, CardComponent, IconComponent],
   template: `
-    <ui-card [hoverable]="true" [padding]="'small'" class="task-card">
+    <app-ui-card [hoverable]="true" [padding]="'small'" class="task-card">
       <div class="task-card-content">
         <div class="task-header">
           <div *ngIf="task.labels && task.labels.length > 0" class="task-labels">
@@ -23,11 +23,11 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
           </div>
 
           <div class="task-priority" [ngClass]="'priority-' + task.priority">
-            <ui-icon
+            <app-ui-icon
               *ngIf="task.priority === 'high' || task.priority === 'urgent'"
               [name]="task.priority === 'urgent' ? 'alert-triangle' : 'alert-circle'"
               [size]="'16'"
-            ></ui-icon>
+            ></app-ui-icon>
           </div>
         </div>
 
@@ -36,12 +36,12 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
         <div class="task-footer">
           <div class="task-meta">
             <div *ngIf="task.dueDate" class="task-due-date" [ngClass]="{ overdue: isOverdue() }">
-              <ui-icon name="calendar" [size]="'14'"></ui-icon>
+              <app-ui-icon name="calendar" [size]="'14'"></app-ui-icon>
               <span>{{ formatDate(task.dueDate) }}</span>
             </div>
 
             <div *ngIf="task.checklist && task.checklist.length > 0" class="task-checklist">
-              <ui-icon name="check-circle" [size]="'14'"></ui-icon>
+              <app-ui-icon name="check-circle" [size]="'14'"></app-ui-icon>
               <span>{{ getCompletedChecklistCount() }}/{{ task.checklist.length }}</span>
             </div>
           </div>
@@ -53,7 +53,7 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
           </div>
         </div>
       </div>
-    </ui-card>
+    </app-ui-card>
   `,
   styles: [
     `

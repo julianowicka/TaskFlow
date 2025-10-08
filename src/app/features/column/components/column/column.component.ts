@@ -1,13 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  CdkDropList,
-  CdkDropListGroup,
-  CdkDrag,
-  CdkDragDrop,
-  DragDropModule,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { Column } from '../../models/column.model';
 import { Task } from '../../../task/models/task.model';
 import { ColumnStore } from '../../services/column.store';
@@ -58,7 +52,7 @@ import { TaskCardComponent } from '../../../task/components/task-card/task-card.
 
         <div class="column-actions">
           <button class="column-action-btn" (click)="openColumnMenu()">
-            <ui-icon name="menu"></ui-icon>
+            <app-ui-icon name="menu"></app-ui-icon>
           </button>
         </div>
       </div>
@@ -85,15 +79,15 @@ import { TaskCardComponent } from '../../../task/components/task-card/task-card.
             class="add-task-button"
             (click)="startAddingTask()"
           >
-            <ui-button variant="text" size="sm">
-              <ui-icon name="plus"></ui-icon>
+            <app-ui-button variant="text" size="sm">
+              <app-ui-icon name="plus"></app-ui-icon>
               Add Task
-            </ui-button>
+            </app-ui-button>
           </div>
 
           <ng-template #addTaskForm>
             <div class="add-task-form">
-              <ui-card [padding]="'small'" [bordered]="true">
+              <app-ui-card [padding]="'small'" [bordered]="true">
                 <textarea
                   [(ngModel)]="newTaskTitle"
                   placeholder="Enter task title..."
@@ -103,14 +97,18 @@ import { TaskCardComponent } from '../../../task/components/task-card/task-card.
                 ></textarea>
 
                 <div class="form-actions">
-                  <ui-button variant="text" size="sm" (buttonClick)="cancelAddTask()">
+                  <app-ui-button variant="text" size="sm" (buttonClick)="cancelAddTask()">
                     Cancel
-                  </ui-button>
-                  <ui-button size="sm" [disabled]="!newTaskTitle.trim()" (buttonClick)="addTask()">
+                  </app-ui-button>
+                  <app-ui-button
+                    size="sm"
+                    [disabled]="!newTaskTitle.trim()"
+                    (buttonClick)="addTask()"
+                  >
                     Add
-                  </ui-button>
+                  </app-ui-button>
                 </div>
-              </ui-card>
+              </app-ui-card>
             </div>
           </ng-template>
         </div>

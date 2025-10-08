@@ -17,9 +17,9 @@ interface ErrorDetails {
   imports: [CommonModule, RouterModule, CardComponent, ButtonComponent, IconComponent],
   template: `
     <div class="error-container">
-      <ui-card [padding]="'large'" class="error-card">
+      <app-ui-card [padding]="'large'" class="error-card">
         <div class="error-icon">
-          <ui-icon name="alert-triangle" [size]="'48'"></ui-icon>
+          <app-ui-icon name="alert-triangle" [size]="'48'"></app-ui-icon>
         </div>
 
         <h1 class="error-title">Something went wrong</h1>
@@ -27,14 +27,14 @@ interface ErrorDetails {
         <p class="error-message">{{ errorMessage }}</p>
 
         <div class="error-actions">
-          <ui-button (buttonClick)="goHome()">Go to Home</ui-button>
-          <ui-button variant="text" (buttonClick)="reload()">Reload Page</ui-button>
+          <app-ui-button (buttonClick)="goHome()">Go to Home</app-ui-button>
+          <app-ui-button variant="text" (buttonClick)="reload()">Reload Page</app-ui-button>
         </div>
 
         <div class="error-details" *ngIf="showDetails">
           <div class="error-details-header" (click)="toggleDetails()">
             <span>Technical Details</span>
-            <ui-icon [name]="detailsExpanded ? 'chevron-up' : 'chevron-down'"></ui-icon>
+            <app-ui-icon [name]="detailsExpanded ? 'chevron-up' : 'chevron-down'"></app-ui-icon>
           </div>
 
           <div class="error-details-content" *ngIf="detailsExpanded">
@@ -46,7 +46,7 @@ interface ErrorDetails {
             </div>
           </div>
         </div>
-      </ui-card>
+      </app-ui-card>
     </div>
   `,
   styles: [

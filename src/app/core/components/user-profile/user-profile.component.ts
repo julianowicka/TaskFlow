@@ -36,7 +36,7 @@ interface UserProfile {
       <h1 class="profile-title">User Profile</h1>
 
       <div class="profile-content">
-        <ui-card class="profile-card">
+        <app-ui-card class="profile-card">
           <div class="profile-header">
             <ui-avatar
               [src]="userProfile().avatar"
@@ -49,7 +49,7 @@ interface UserProfile {
               <h2 class="profile-name">{{ userProfile().name }}</h2>
               <p class="profile-role">{{ userProfile().role }}</p>
               <p class="profile-joined">
-                <ui-icon name="calendar" [size]="'16'"></ui-icon>
+                <app-ui-icon name="calendar" [size]="'16'"></app-ui-icon>
                 Joined {{ userProfile().joinDate | date: 'mediumDate' }}
               </p>
             </div>
@@ -84,61 +84,61 @@ interface UserProfile {
 
             <ui-tab label="Edit Profile" icon="edit">
               <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
-                <ui-input
+                <app-ui-input
                   label="Name"
                   formControlName="name"
                   [error]="getError('name')"
                   data-testid="profile-name-input"
                 >
-                </ui-input>
+                </app-ui-input>
 
-                <ui-input
+                <app-ui-input
                   label="Email"
                   type="email"
                   formControlName="email"
                   [error]="getError('email')"
                   data-testid="profile-email-input"
                 >
-                </ui-input>
+                </app-ui-input>
 
-                <ui-input
+                <app-ui-input
                   label="Location"
                   formControlName="location"
                   data-testid="profile-location-input"
                 >
-                </ui-input>
+                </app-ui-input>
 
-                <ui-input
+                <app-ui-input
                   label="Website"
                   formControlName="website"
                   data-testid="profile-website-input"
                 >
-                </ui-input>
+                </app-ui-input>
 
-                <ui-input
+                <app-ui-input
                   label="Bio"
                   type="textarea"
                   formControlName="bio"
                   data-testid="profile-bio-input"
                 >
-                </ui-input>
+                </app-ui-input>
 
                 <div class="profile-form-actions">
-                  <ui-button
+                  <app-ui-button
                     type="submit"
                     [disabled]="profileForm.invalid || !profileForm.dirty"
                     data-testid="profile-save-button"
                   >
                     Save Changes
-                  </ui-button>
-                  <ui-button
+                  </app-ui-button>
+                  <app-ui-button
                     type="button"
                     variant="text"
                     (buttonClick)="resetForm()"
                     data-testid="profile-reset-button"
                   >
                     Reset
-                  </ui-button>
+                  </app-ui-button>
                 </div>
               </form>
             </ui-tab>
@@ -151,47 +151,47 @@ interface UserProfile {
                   (ngSubmit)="onChangePassword()"
                   class="profile-form"
                 >
-                  <ui-input
+                  <app-ui-input
                     label="Current Password"
                     type="password"
                     formControlName="currentPassword"
                     [error]="getPasswordError('currentPassword')"
                     data-testid="profile-current-password-input"
                   >
-                  </ui-input>
+                  </app-ui-input>
 
-                  <ui-input
+                  <app-ui-input
                     label="New Password"
                     type="password"
                     formControlName="newPassword"
                     [error]="getPasswordError('newPassword')"
                     data-testid="profile-new-password-input"
                   >
-                  </ui-input>
+                  </app-ui-input>
 
-                  <ui-input
+                  <app-ui-input
                     label="Confirm New Password"
                     type="password"
                     formControlName="confirmPassword"
                     [error]="getPasswordError('confirmPassword')"
                     data-testid="profile-confirm-password-input"
                   >
-                  </ui-input>
+                  </app-ui-input>
 
                   <div class="profile-form-actions">
-                    <ui-button
+                    <app-ui-button
                       type="submit"
                       [disabled]="passwordForm.invalid"
                       data-testid="profile-change-password-button"
                     >
                       Change Password
-                    </ui-button>
+                    </app-ui-button>
                   </div>
                 </form>
               </div>
             </ui-tab>
           </ui-tabs>
-        </ui-card>
+        </app-ui-card>
       </div>
     </div>
   `,
@@ -359,7 +359,7 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
-  passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
+  passwordMatchValidator(form: FormGroup): Record<string, boolean> | null {
     const newPassword = form.get('newPassword')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
 

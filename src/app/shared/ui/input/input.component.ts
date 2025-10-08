@@ -1,9 +1,9 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'ui-input',
+  selector: 'app-ui-input',
   standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [

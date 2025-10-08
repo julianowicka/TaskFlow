@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 export interface Notification {
   id: string;
@@ -39,7 +39,7 @@ export class NotificationService {
     }
   }
 
-  success(title: string, message: string, duration: number = 3000): void {
+  success(title: string, message: string, duration = 3000): void {
     this.addNotification({
       type: 'success',
       title,
@@ -48,7 +48,7 @@ export class NotificationService {
     });
   }
 
-  error(title: string, message: string, duration: number = 5000): void {
+  error(title: string, message: string, duration = 5000): void {
     this.addNotification({
       type: 'error',
       title,
@@ -57,7 +57,7 @@ export class NotificationService {
     });
   }
 
-  warning(title: string, message: string, duration: number = 4000): void {
+  warning(title: string, message: string, duration = 4000): void {
     this.addNotification({
       type: 'warning',
       title,
@@ -66,7 +66,7 @@ export class NotificationService {
     });
   }
 
-  info(title: string, message: string, duration: number = 3000): void {
+  info(title: string, message: string, duration = 3000): void {
     this.addNotification({
       type: 'info',
       title,

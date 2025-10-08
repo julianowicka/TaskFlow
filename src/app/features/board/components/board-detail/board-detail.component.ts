@@ -39,10 +39,10 @@ import { ColumnComponent } from '../../../column/components/column/column.compon
         </div>
 
         <div class="board-actions">
-          <ui-button variant="secondary" size="sm" (buttonClick)="openBoardSettings()">
-            <ui-icon name="settings"></ui-icon>
+          <app-ui-button variant="secondary" size="sm" (buttonClick)="openBoardSettings()">
+            <app-ui-icon name="settings"></app-ui-icon>
             Settings
-          </ui-button>
+          </app-ui-button>
         </div>
       </header>
 
@@ -65,34 +65,37 @@ import { ColumnComponent } from '../../../column/components/column/column.compon
               </div>
 
               <div class="add-column-wrapper">
-                <ui-card [padding]="'medium'" [bordered]="true" class="add-column-card">
+                <app-ui-card [padding]="'medium'" [bordered]="true" class="add-column-card">
                   <div *ngIf="!showAddColumn; else addColumnForm" class="add-column-placeholder">
-                    <ui-button variant="text" (buttonClick)="showAddColumn = true">
-                      <ui-icon name="plus"></ui-icon>
+                    <app-ui-button variant="text" (buttonClick)="showAddColumn = true">
+                      <app-ui-icon name="plus"></app-ui-icon>
                       Add Column
-                    </ui-button>
+                    </app-ui-button>
                   </div>
 
                   <ng-template #addColumnForm>
                     <div class="add-column-form">
-                      <ui-input
+                      <app-ui-input
                         label="Column Title"
                         [(ngModel)]="newColumnTitle"
                         placeholder="Enter column title"
                         [required]="true"
-                      ></ui-input>
+                      ></app-ui-input>
 
                       <div class="form-actions">
-                        <ui-button variant="text" (buttonClick)="cancelAddColumn()">
+                        <app-ui-button variant="text" (buttonClick)="cancelAddColumn()">
                           Cancel
-                        </ui-button>
-                        <ui-button [disabled]="!newColumnTitle.trim()" (buttonClick)="addColumn()">
+                        </app-ui-button>
+                        <app-ui-button
+                          [disabled]="!newColumnTitle.trim()"
+                          (buttonClick)="addColumn()"
+                        >
                           Add Column
-                        </ui-button>
+                        </app-ui-button>
                       </div>
                     </div>
                   </ng-template>
-                </ui-card>
+                </app-ui-card>
               </div>
             </div>
           </ng-template>
@@ -101,11 +104,11 @@ import { ColumnComponent } from '../../../column/components/column/column.compon
     </div>
 
     <div class="board-not-found" *ngIf="!boardStore.selectedBoard() && !boardStore.isLoading()">
-      <ui-card>
+      <app-ui-card>
         <h2>Board not found</h2>
         <p>The board you're looking for doesn't exist or you don't have access to it.</p>
-        <ui-button [routerLink]="['/boards']">Go to Boards</ui-button>
-      </ui-card>
+        <app-ui-button [routerLink]="['/boards']">Go to Boards</app-ui-button>
+      </app-ui-card>
     </div>
   `,
   styles: [

@@ -25,7 +25,7 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
       </div>
 
       <div class="profile-content">
-        <ui-card [padding]="'large'" class="profile-card">
+        <app-ui-card [padding]="'large'" class="profile-card">
           <h2 class="section-title">Personal Information</h2>
 
           <form (ngSubmit)="saveProfile()" #profileForm="ngForm" class="profile-form">
@@ -33,21 +33,21 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
               <div class="avatar">
                 {{ getInitials() }}
               </div>
-              <ui-button variant="secondary" size="sm">
-                <ui-icon name="upload"></ui-icon>
+              <app-ui-button variant="secondary" size="sm">
+                <app-ui-icon name="upload"></app-ui-icon>
                 Change Avatar
-              </ui-button>
+              </app-ui-button>
             </div>
 
-            <ui-input
+            <app-ui-input
               label="Full Name"
               [(ngModel)]="user.name"
               name="name"
               [required]="true"
               [error]="nameError"
-            ></ui-input>
+            ></app-ui-input>
 
-            <ui-input
+            <app-ui-input
               label="Email"
               [(ngModel)]="user.email"
               name="email"
@@ -56,30 +56,30 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
               [error]="emailError"
               [disabled]="true"
               hint="Email cannot be changed"
-            ></ui-input>
+            ></app-ui-input>
 
             <div class="form-actions">
-              <ui-button type="submit" [disabled]="isLoading || !profileForm.form.dirty">
+              <app-ui-button type="submit" [disabled]="isLoading || !profileForm.form.dirty">
                 {{ isLoading ? 'Saving...' : 'Save Changes' }}
-              </ui-button>
+              </app-ui-button>
             </div>
           </form>
-        </ui-card>
+        </app-ui-card>
 
-        <ui-card [padding]="'large'" class="profile-card">
+        <app-ui-card [padding]="'large'" class="profile-card">
           <h2 class="section-title">Change Password</h2>
 
           <form (ngSubmit)="changePassword()" #passwordForm="ngForm" class="profile-form">
-            <ui-input
+            <app-ui-input
               label="Current Password"
               [(ngModel)]="passwordData.currentPassword"
               name="currentPassword"
               type="password"
               [required]="true"
               [error]="currentPasswordError"
-            ></ui-input>
+            ></app-ui-input>
 
-            <ui-input
+            <app-ui-input
               label="New Password"
               [(ngModel)]="passwordData.newPassword"
               name="newPassword"
@@ -87,35 +87,35 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
               [required]="true"
               [error]="newPasswordError"
               hint="Password must be at least 8 characters"
-            ></ui-input>
+            ></app-ui-input>
 
-            <ui-input
+            <app-ui-input
               label="Confirm New Password"
               [(ngModel)]="passwordData.confirmPassword"
               name="confirmPassword"
               type="password"
               [required]="true"
               [error]="confirmPasswordError"
-            ></ui-input>
+            ></app-ui-input>
 
             <div class="form-error" *ngIf="passwordFormError">
               {{ passwordFormError }}
             </div>
 
             <div class="form-actions">
-              <ui-button
+              <app-ui-button
                 type="submit"
                 [disabled]="
                   isPasswordLoading || !passwordForm.form.valid || !passwordForm.form.dirty
                 "
               >
                 {{ isPasswordLoading ? 'Changing Password...' : 'Change Password' }}
-              </ui-button>
+              </app-ui-button>
             </div>
           </form>
-        </ui-card>
+        </app-ui-card>
 
-        <ui-card [padding]="'large'" class="profile-card danger-zone">
+        <app-ui-card [padding]="'large'" class="profile-card danger-zone">
           <h2 class="section-title">Danger Zone</h2>
 
           <p class="danger-text">
@@ -123,11 +123,11 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
           </p>
 
           <div class="danger-actions">
-            <ui-button variant="danger" (buttonClick)="confirmDeleteAccount()">
+            <app-ui-button variant="danger" (buttonClick)="confirmDeleteAccount()">
               Delete Account
-            </ui-button>
+            </app-ui-button>
           </div>
-        </ui-card>
+        </app-ui-card>
       </div>
     </div>
   `,

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 
 @Component({
-  selector: 'ui-modal',
+  selector: 'app-ui-modal',
   standalone: true,
   imports: [CommonModule, ButtonComponent],
   template: `
@@ -45,18 +45,18 @@ import { ButtonComponent } from '../button/button.component';
         </div>
 
         <div *ngIf="showFooter" class="ui-modal__footer">
-          <ui-button *ngIf="showCancelButton" variant="secondary" (buttonClick)="cancel()">
+          <app-ui-button *ngIf="showCancelButton" variant="secondary" (buttonClick)="cancel()">
             {{ cancelText }}
-          </ui-button>
+          </app-ui-button>
 
-          <ui-button
+          <app-ui-button
             *ngIf="showConfirmButton"
             [variant]="confirmVariant"
             [loading]="confirmLoading()"
             (buttonClick)="confirm()"
           >
             {{ confirmText }}
-          </ui-button>
+          </app-ui-button>
         </div>
       </div>
     </div>

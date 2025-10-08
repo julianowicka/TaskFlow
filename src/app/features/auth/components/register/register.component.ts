@@ -20,28 +20,28 @@ import { InputComponent } from '../../../../shared/ui/input/input.component';
   ],
   template: `
     <div class="auth-container">
-      <ui-card [padding]="'large'" class="auth-card">
+      <app-ui-card [padding]="'large'" class="auth-card">
         <h1 class="auth-title">Create an Account</h1>
 
         <form (ngSubmit)="register()" #registerForm="ngForm" class="auth-form">
-          <ui-input
+          <app-ui-input
             label="Full Name"
             [(ngModel)]="name"
             name="name"
             [required]="true"
             [error]="nameError"
-          ></ui-input>
+          ></app-ui-input>
 
-          <ui-input
+          <app-ui-input
             label="Email"
             [(ngModel)]="email"
             name="email"
             type="email"
             [required]="true"
             [error]="emailError"
-          ></ui-input>
+          ></app-ui-input>
 
-          <ui-input
+          <app-ui-input
             label="Password"
             [(ngModel)]="password"
             name="password"
@@ -49,37 +49,37 @@ import { InputComponent } from '../../../../shared/ui/input/input.component';
             [required]="true"
             [error]="passwordError"
             hint="Password must be at least 8 characters"
-          ></ui-input>
+          ></app-ui-input>
 
-          <ui-input
+          <app-ui-input
             label="Confirm Password"
             [(ngModel)]="confirmPassword"
             name="confirmPassword"
             type="password"
             [required]="true"
             [error]="confirmPasswordError"
-          ></ui-input>
+          ></app-ui-input>
 
           <div class="form-error" *ngIf="formError">
             {{ formError }}
           </div>
 
           <div class="form-actions">
-            <ui-button type="submit" [fullWidth]="true" [disabled]="isLoading">
+            <app-ui-button type="submit" [fullWidth]="true" [disabled]="isLoading">
               {{ isLoading ? 'Creating account...' : 'Create Account' }}
-            </ui-button>
+            </app-ui-button>
           </div>
         </form>
 
         <div class="auth-footer">
           <p>Already have an account? <a routerLink="/auth/login">Login</a></p>
           <div class="skip-login">
-            <ui-button variant="text" size="sm" (buttonClick)="skipLogin()">
+            <app-ui-button variant="text" size="sm" (buttonClick)="skipLogin()">
               Skip Login (Development)
-            </ui-button>
+            </app-ui-button>
           </div>
         </div>
-      </ui-card>
+      </app-ui-card>
     </div>
   `,
   styles: [

@@ -4,7 +4,7 @@ import { IconComponent } from '../icon/icon.component';
 import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
-  selector: 'ui-theme-toggle',
+  selector: 'app-ui-theme-toggle',
   standalone: true,
   imports: [CommonModule, IconComponent],
   styleUrls: ['./theme-toggle.component.scss'],
@@ -15,7 +15,7 @@ import { ThemeService } from '../../../core/services/theme.service';
       [attr.aria-label]="themeService.isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'"
       (click)="themeService.toggleDarkMode()"
     >
-      <ui-icon [name]="themeService.isDarkMode() ? 'sun' : 'moon'" [size]="'20'"></ui-icon>
+      <app-ui-icon [name]="themeService.isDarkMode() ? 'sun' : 'moon'" [size]="'20'"></app-ui-icon>
     </button>
   `,
 })

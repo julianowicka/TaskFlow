@@ -50,7 +50,7 @@ export class BoardStore {
   }
 
   // Actions
-  loadBoards(ownerId: string = 'current-user'): void {
+  loadBoards(ownerId = 'current-user'): void {
     this.loading.set(true);
     this.error.set(null);
 

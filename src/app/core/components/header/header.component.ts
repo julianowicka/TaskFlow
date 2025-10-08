@@ -32,25 +32,25 @@ import { AuthService } from '../../services/auth.service';
         </nav>
 
         <div class="header-actions">
-          <ui-theme-toggle></ui-theme-toggle>
+          <app-ui-theme-toggle></app-ui-theme-toggle>
 
           <ng-container *ngIf="authService.isAuthenticated(); else loginButton">
-            <ui-button variant="text" [routerLink]="['/profile']" routerLinkActive="active">
-              <ui-icon name="user"></ui-icon>
+            <app-ui-button variant="text" [routerLink]="['/profile']" routerLinkActive="active">
+              <app-ui-icon name="user"></app-ui-icon>
               Profile
-            </ui-button>
+            </app-ui-button>
 
-            <ui-button variant="text" (buttonClick)="authService.logout()">
-              <ui-icon name="log-out"></ui-icon>
+            <app-ui-button variant="text" (buttonClick)="authService.logout()">
+              <app-ui-icon name="log-out"></app-ui-icon>
               Logout
-            </ui-button>
+            </app-ui-button>
           </ng-container>
 
           <ng-template #loginButton>
-            <ui-button variant="primary" [routerLink]="['/auth/login']">
-              <ui-icon name="log-in"></ui-icon>
+            <app-ui-button variant="primary" [routerLink]="['/auth/login']">
+              <app-ui-icon name="log-in"></app-ui-icon>
               Login
-            </ui-button>
+            </app-ui-button>
           </ng-template>
         </div>
       </div>

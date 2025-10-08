@@ -15,10 +15,10 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
     <div class="board-list-container">
       <header class="board-list-header">
         <h1>My Boards</h1>
-        <ui-button (buttonClick)="openCreateBoardModal()">
-          <ui-icon name="plus"></ui-icon>
+        <app-ui-button (buttonClick)="openCreateBoardModal()">
+          <app-ui-icon name="plus"></app-ui-icon>
           Create Board
-        </ui-button>
+        </app-ui-button>
       </header>
 
       <div class="board-list">
@@ -31,7 +31,7 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
         <ng-template #boardsContent>
           <ng-container *ngIf="boardStore.allBoards().length; else emptyState">
             <div class="board-grid">
-              <ui-card
+              <app-ui-card
                 *ngFor="let board of boardStore.allBoards()"
                 [title]="board.title"
                 [subtitle]="formatDate(board.updatedAt)"
@@ -45,14 +45,16 @@ import { IconComponent } from '../../../../shared/ui/icon/icon.component';
                     <span>{{ board.columnOrder.length }} columns</span>
                   </div>
                 </div>
-              </ui-card>
+              </app-ui-card>
             </div>
           </ng-container>
 
           <ng-template #emptyState>
             <div class="board-list-empty">
               <p>You don't have any boards yet.</p>
-              <ui-button (buttonClick)="openCreateBoardModal()">Create your first board</ui-button>
+              <app-ui-button (buttonClick)="openCreateBoardModal()"
+                >Create your first board</app-ui-button
+              >
             </div>
           </ng-template>
         </ng-template>
