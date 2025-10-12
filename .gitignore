@@ -30,4 +30,4 @@ coverage
 
 .tsbuildinfo
 .angular-compiler.db
-.lock 
+.lock backend/taskflow-backend/target/
