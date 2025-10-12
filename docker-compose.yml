@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  # Nginx Proxy Manager
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    container_name: taskflow-nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs
+      - nginx_vhost:/etc/nginx/vhost.d
+      - nginx_html:/usr/share/nginx/html
+    environment:
+      - DEFAULT_HOST=${VIRTUAL_HOST}
+      - HTTPS_METHOD=noredirect
+      - ENABLE_SSL=false
+    networks:
+      - taskflow-network
+
+  # Let's Encrypt Companion (disabled for local development)
+  # letsencrypt:
+  #   image: nginxproxy/acme-companion
+  #   container_name: taskflow-letsencrypt
+  #   restart: unless-stopped
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock:ro
+  #     - nginx_certs:/etc/nginx/certs:rw
+  #     - nginx_vhost:/etc/nginx/vhost.d:rw
+  #     - nginx_html:/usr/share/nginx/html:rw
+  #   environment:
+  #     - NGINX_PROXY_CONTAINER=taskflow-nginx-proxy
+  #   depends_on:
+  #     - nginx-proxy
+  #   networks:
+  #     - taskflow-network
+
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: taskflow-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - taskflow-network
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ./backend/taskflow-backend
+      dockerfile: Dockerfile
+    container_name: taskflow-backend
+    restart: unless-stopped
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb:27017/${MONGO_DATABASE}?authSource=admin
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      JWT_SECRET: ${JWT_SECRET}
+      VIRTUAL_HOST: api.${VIRTUAL_HOST}
+    depends_on:
+      - mongodb
+    networks:
+      - taskflow-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Angular Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: taskflow-frontend
+    restart: unless-stopped
+    environment:
+      VIRTUAL_HOST: ${VIRTUAL_HOST}
+    depends_on:
+      - backend
+    networks:
+      - taskflow-network
+
+volumes:
+  mongodb_data:
+    driver: local
+  nginx_certs:
+    driver: local
+  nginx_vhost:
+    driver: local
+  nginx_html:
+    driver: local
+
+networks:
+  taskflow-network:
+    driver: bridge
