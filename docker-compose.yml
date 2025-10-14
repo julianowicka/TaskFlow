@@ -4,10 +4,11 @@ services:
   # Nginx Proxy Manager
   nginx-proxy:
     image: nginxproxy/nginx-proxy
-    container_name: taskflow-nginx-proxy
+    container_name: nginx-proxy
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - nginx_certs:/etc/nginx/certs
@@ -15,27 +16,27 @@ services:
       - nginx_html:/usr/share/nginx/html
     environment:
       - DEFAULT_HOST=${VIRTUAL_HOST}
-      - HTTPS_METHOD=noredirect
-      - ENABLE_SSL=false
+      - HTTPS_METHOD=redirect
+      - ENABLE_SSL=true
     networks:
-      - taskflow-network
+      - proxy
 
-  # Let's Encrypt Companion (disabled for local development)
-  # letsencrypt:
-  #   image: nginxproxy/acme-companion
-  #   container_name: taskflow-letsencrypt
-  #   restart: unless-stopped
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock:ro
-  #     - nginx_certs:/etc/nginx/certs:rw
-  #     - nginx_vhost:/etc/nginx/vhost.d:rw
-  #     - nginx_html:/usr/share/nginx/html:rw
-  #   environment:
-  #     - NGINX_PROXY_CONTAINER=taskflow-nginx-proxy
-  #   depends_on:
-  #     - nginx-proxy
-  #   networks:
-  #     - taskflow-network
+  # Let's Encrypt Companion
+  letsencrypt:
+    image: nginxproxy/acme-companion
+    container_name: letsencrypt
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - nginx_certs:/etc/nginx/certs:rw
+      - nginx_vhost:/etc/nginx/vhost.d:rw
+      - nginx_html:/usr/share/nginx/html:rw
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    depends_on:
+      - nginx-proxy
+    networks:
+      - proxy
 
   # MongoDB Database
   mongodb:
@@ -50,7 +51,7 @@ services:
       - mongodb_data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
-      - taskflow-network
+      - proxy
 
   # Spring Boot Backend
   backend:
@@ -64,10 +65,12 @@ services:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       JWT_SECRET: ${JWT_SECRET}
       VIRTUAL_HOST: api.${VIRTUAL_HOST}
+      LETSENCRYPT_HOST: api.${VIRTUAL_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     depends_on:
       - mongodb
     networks:
-      - taskflow-network
+      - proxy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/api/actuator/health"]
       interval: 30s
@@ -84,10 +87,12 @@ services:
     restart: unless-stopped
     environment:
       VIRTUAL_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_HOST: ${VIRTUAL_HOST}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
     depends_on:
       - backend
     networks:
-      - taskflow-network
+      - proxy
 
 volumes:
   mongodb_data:
@@ -100,5 +105,5 @@ volumes:
     driver: local
 
 networks:
-  taskflow-network:
-    driver: bridge
+  proxy:
+    external: true
