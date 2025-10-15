@@ -30,4 +30,32 @@ coverage
 
 .tsbuildinfo
 .angular-compiler.db
-.lock backend/taskflow-backend/target/
+.lock
+
+# Java build artifacts
+backend/taskflow-backend/target/
+backend/taskflow-backend/*.jar
+backend/taskflow-backend/*.war
+backend/taskflow-backend/*.ear
+backend/taskflow-backend/*.zip
+backend/taskflow-backend/*.tar.gz
+backend/taskflow-backend/*.rar
+
+# IDE files
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
