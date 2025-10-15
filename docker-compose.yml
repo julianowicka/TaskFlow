@@ -7,8 +7,8 @@ services:
     container_name: nginx-proxy
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - nginx_certs:/etc/nginx/certs
@@ -72,7 +72,7 @@ services:
     networks:
       - proxy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/api/actuator/health"]
+      test: ['CMD', 'curl', '-f', 'http://localhost:8080/api/actuator/health']
       interval: 30s
       timeout: 10s
       retries: 3
