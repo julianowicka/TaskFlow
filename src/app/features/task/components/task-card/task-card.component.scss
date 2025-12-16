@@ -1,0 +1,122 @@
+@import '../../../../../styles/abstracts/variables';
+@import '../../../../../styles/abstracts/functions';
+@import '../../../../../styles/abstracts/mixins';
+@import '../../../../../styles/abstracts/placeholders';
+
+.task-card {
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.task-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-1);
+}
+
+.task-label {
+  font-size: var(--font-size-xs);
+  padding: 0 var(--spacing-1);
+  border-radius: var(--border-radius-sm);
+  color: white;
+  font-weight: var(--font-weight-medium);
+}
+
+.task-priority {
+  display: flex;
+  align-items: center;
+
+  &.priority-urgent {
+    color: var(--color-danger);
+  }
+
+  &.priority-high {
+    color: var(--color-warning);
+  }
+}
+
+.task-title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.task-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-1);
+}
+
+.task-meta {
+  display: flex;
+  gap: var(--spacing-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.task-due-date,
+.task-checklist {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+
+  &.overdue {
+    color: var(--color-danger);
+  }
+}
+
+.task-assignee {
+  .avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius-full);
+    background-color: var(--color-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+// Drag & Drop styles
+.cdk-drag-preview {
+  box-shadow: var(--shadow-lg);
+  transform: rotate(2deg);
+  border-radius: var(--border-radius-base);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+  border: 2px dashed var(--color-primary);
+  border-radius: var(--border-radius-base);
+  background: var(--color-surface-hover);
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

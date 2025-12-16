@@ -1,0 +1,165 @@
+<app-ui-modal
+  *ngIf="isOpen"
+  (modalClose)="closeModal()"
+  [title]="task?.title || 'Task Details'"
+  [size]="'large'"
+>
+  <div class="task-detail-content" *ngIf="task">
+    <div class="task-header">
+      <div class="task-title-section">
+        <input
+          class="task-title-input"
+          [(ngModel)]="editableTask.title"
+          (blur)="updateField('title')"
+          placeholder="Task title"
+        />
+
+        <div class="task-meta">
+          <div class="task-id">ID: {{ task.id.slice(0, 8) }}</div>
+          <div class="task-created">Created: {{ formatDate(task.createdAt) }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-body">
+      <div class="task-main">
+        <div class="task-description-section">
+          <h4>Description</h4>
+          <textarea
+            class="task-description-input"
+            [(ngModel)]="editableTask.description"
+            (blur)="updateField('description')"
+            placeholder="Add a description..."
+            rows="4"
+          ></textarea>
+        </div>
+
+        <div
+          class="task-checklist-section"
+          *ngIf="editableTask.checklist?.length || isAddingChecklistItem"
+        >
+          <div class="section-header">
+            <h4>Checklist</h4>
+            <span class="checklist-progress">
+              {{ getCompletedChecklistCount() }}/{{ editableTask.checklist?.length || 0 }}
+            </span>
+          </div>
+
+          <div class="checklist-items">
+            <div class="checklist-item" *ngFor="let item of editableTask.checklist; let i = index">
+              <div class="checklist-item-content">
+                <div class="checklist-checkbox">
+                  <input
+                    type="checkbox"
+                    [checked]="item.isCompleted"
+                    (change)="toggleChecklistItem(item)"
+                  />
+                </div>
+                <div class="checklist-text" [class.completed]="item.isCompleted">
+                  {{ item.text }}
+                </div>
+              </div>
+              <div class="checklist-actions">
+                <button class="icon-button" (click)="deleteChecklistItem(item)">
+                  <app-ui-icon name="trash-2" [size]="'16'"></app-ui-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="add-checklist-item" *ngIf="isAddingChecklistItem">
+            <div class="checklist-item-content">
+              <input type="checkbox" disabled />
+              <input
+                type="text"
+                [(ngModel)]="newChecklistItemText"
+                placeholder="Add checklist item..."
+                class="checklist-item-text"
+                #checklistInput
+              />
+            </div>
+            <div class="add-checklist-actions">
+              <app-ui-button size="sm" (buttonClick)="addChecklistItem()">Add</app-ui-button>
+              <app-ui-button variant="text" size="sm" (buttonClick)="cancelAddChecklistItem()"
+                >Cancel</app-ui-button
+              >
+            </div>
+          </div>
+
+          <app-ui-button
+            *ngIf="!isAddingChecklistItem"
+            variant="text"
+            size="sm"
+            (buttonClick)="startAddingChecklistItem()"
+          >
+            <app-ui-icon name="plus"></app-ui-icon>
+            Add Item
+          </app-ui-button>
+        </div>
+
+        <div class="task-comments-section">
+          <h4>Comments</h4>
+          <div class="comments-placeholder">
+            <p>Comments will be implemented in a future update.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-sidebar">
+        <div class="sidebar-section">
+          <h5>Status</h5>
+          <select [(ngModel)]="editableTask.status" (change)="updateField('status')">
+            <option value="todo">To Do</option>
+            <option value="in_progress">In Progress</option>
+            <option value="review">Review</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+
+        <div class="sidebar-section">
+          <h5>Priority</h5>
+          <select [(ngModel)]="editableTask.priority" (change)="updateField('priority')">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent</option>
+          </select>
+        </div>
+
+        <div class="sidebar-section">
+          <h5>Due Date</h5>
+          <input
+            type="date"
+            [ngModel]="editableTask.dueDate | date: 'yyyy-MM-dd'"
+            (ngModelChange)="updateDueDate($event)"
+          />
+        </div>
+
+        <div class="sidebar-section">
+          <h5>Labels</h5>
+          <div class="labels-placeholder">
+            <p>Labels will be implemented in a future update.</p>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h5>Attachments</h5>
+          <div class="attachments-placeholder">
+            <p>Attachments will be implemented in a future update.</p>
+          </div>
+        </div>
+
+        <div class="sidebar-actions">
+          <app-ui-button variant="danger" size="sm" (buttonClick)="deleteTask()">
+            <app-ui-icon name="trash"></app-ui-icon>
+            Delete Task
+          </app-ui-button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer" slot="footer">
+    <app-ui-button variant="text" (buttonClick)="closeModal()">Close</app-ui-button>
+  </div>
+</app-ui-modal>

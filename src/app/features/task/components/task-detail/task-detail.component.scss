@@ -1,4 +1,3 @@
-// Task Detail Component Styles
 @import '../../../../../styles/abstracts/variables';
 @import '../../../../../styles/abstracts/functions';
 @import '../../../../../styles/abstracts/placeholders';
@@ -10,6 +9,8 @@
 }
 
 .task-header {
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--spacing-4);
 }
 
@@ -23,27 +24,30 @@
   width: 100%;
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
-  border: none;
+  padding: var(--spacing-2);
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-base);
   background-color: transparent;
-  padding: var(--spacing-2) 0;
-  border-bottom: 1px solid transparent;
   color: var(--color-text);
 
   &:focus {
     outline: none;
-    border-bottom-color: var(--color-primary);
+    border-color: var(--color-primary);
+    background-color: var(--color-surface);
   }
 
   &:hover:not(:focus) {
-    border-bottom-color: var(--color-border);
+    background-color: var(--color-surface-hover);
   }
 }
 
 .task-meta {
   display: flex;
   gap: var(--spacing-4);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
+  margin-top: var(--spacing-1);
+  padding-left: var(--spacing-2);
 }
 
 .task-body {
@@ -64,6 +68,7 @@
 
 .task-sidebar {
   width: 240px;
+  flex-shrink: 0;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -72,12 +77,6 @@
 
 .task-description-section,
 .task-checklist-section,
-.task-status-section,
-.task-priority-section,
-.task-assignee-section,
-.task-due-date-section,
-.task-labels-section,
-.task-attachments-section,
 .task-comments-section {
   h4 {
     font-size: var(--font-size-md);
@@ -105,27 +104,27 @@
   }
 }
 
-.checklist-header {
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--spacing-2);
-}
 
-.checklist-progress {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+  .checklist-progress {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+  }
 }
 
 .checklist-items {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
 }
 
 .checklist-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--spacing-2);
   padding: var(--spacing-2);
   border-radius: var(--border-radius-base);
@@ -134,95 +133,126 @@
     background-color: var(--color-surface-hover);
   }
 
-  &.completed {
-    .checklist-item-text {
+  .checklist-item-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+  }
+
+  .checklist-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-surface);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-surface-hover);
+    }
+  }
+
+  .checklist-text {
+    flex: 1;
+    padding: var(--spacing-1) var(--spacing-2);
+    border: none;
+    border-radius: var(--border-radius-base);
+    font-size: var(--font-size-sm);
+    background-color: transparent;
+    color: var(--color-text);
+
+    &.completed {
       text-decoration: line-through;
       color: var(--color-text-secondary);
     }
+
+    &:focus {
+      outline: none;
+      background-color: var(--color-surface);
+    }
+
+    &:hover:not(:focus) {
+      background-color: var(--color-surface-hover);
+    }
+  }
+
+  .checklist-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--border-radius-base);
+    background-color: transparent;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-surface-hover);
+    }
+  }
+
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: var(--spacing-1);
+    border-radius: var(--border-radius-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+
+    &:hover {
+      background-color: var(--color-surface);
+      color: var(--color-danger);
+    }
+  }
+
+  &:hover .icon-button {
+    visibility: visible;
   }
 }
 
-.checklist-item-checkbox {
-  margin-top: 3px;
-}
+.add-checklist-item {
+  margin-bottom: var(--spacing-2);
 
-.checklist-item-content {
-  flex: 1;
-}
-
-.checklist-item-text {
-  width: 100%;
-  border: none;
-  background-color: transparent;
-  color: var(--color-text);
-
-  &:focus {
-    outline: none;
+  .add-checklist-actions {
+    display: flex;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-2);
+    margin-left: 24px;
   }
-}
-
-.checklist-item-actions {
-  opacity: 0;
-  transition: opacity 0.2s ease;
-
-  .checklist-item:hover & {
-    opacity: 1;
-  }
-}
-
-.checklist-add-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2);
-  margin-top: var(--spacing-2);
-}
-
-.checklist-add-input {
-  width: 100%;
-  padding: var(--spacing-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-base);
-  background-color: var(--color-surface);
-  color: var(--color-text);
-
-  &:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
-  }
-}
-
-.checklist-add-actions {
-  display: flex;
-  gap: var(--spacing-2);
 }
 
 .sidebar-section {
   margin-bottom: var(--spacing-4);
 
-  h4 {
+  h5 {
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-medium);
     margin-bottom: var(--spacing-2);
     color: var(--color-text);
   }
-}
 
-.status-select,
-.priority-select,
-.assignee-select,
-.due-date-input {
-  width: 100%;
-  padding: var(--spacing-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-base);
-  background-color: var(--color-surface);
-  color: var(--color-text);
+  select,
+  input[type='date'] {
+    width: 100%;
+    padding: var(--spacing-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-base);
+    background-color: var(--color-surface);
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
 
-  &:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+    &:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+    }
   }
 }
 

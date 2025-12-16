@@ -1,0 +1,86 @@
+<div class="column-container">
+  <div class="column-header">
+    <div class="column-title-wrapper">
+      <div
+        *ngIf="!isEditingTitle; else titleEditForm"
+        class="column-title"
+        (click)="startEditingTitle()"
+      >
+        <h3>{{ column.title }}</h3>
+        <span class="task-count">{{ column.taskIds.length }}</span>
+      </div>
+
+      <ng-template #titleEditForm>
+        <form class="column-title-form" (submit)="saveColumnTitle()">
+          <input
+            type="text"
+            [(ngModel)]="editableTitle"
+            name="columnTitle"
+            class="column-title-input"
+            (blur)="saveColumnTitle()"
+            #titleInput
+          />
+        </form>
+      </ng-template>
+    </div>
+
+    <div class="column-actions">
+      <button class="column-action-btn" (click)="openColumnMenu()">
+        <app-ui-icon name="menu"></app-ui-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="column-content">
+    <div
+      class="tasks-container"
+      cdkDropList
+      [cdkDropListData]="tasks"
+      [cdkDropListConnectedTo]="dropListIds"
+      (cdkDropListDropped)="onTaskDrop($event)"
+      [cdkDropListDisabled]="false"
+    >
+      <app-task-card
+        *ngFor="let task of tasks"
+        [task]="task"
+        cdkDrag
+        (click)="openTaskDetail(task.id)"
+        class="task-card-draggable"
+      ></app-task-card>
+
+      <div
+        *ngIf="!isAddingTask; else addTaskForm"
+        class="add-task-button"
+        (click)="startAddingTask()"
+      >
+        <app-ui-button variant="text" size="sm">
+          <app-ui-icon name="plus"></app-ui-icon>
+          Add Task
+        </app-ui-button>
+      </div>
+
+      <ng-template #addTaskForm>
+        <div class="add-task-form">
+          <app-ui-card [padding]="'small'" [bordered]="true">
+            <textarea
+              [(ngModel)]="newTaskTitle"
+              placeholder="Enter task title..."
+              class="task-title-input"
+              rows="3"
+              #taskInput
+            ></textarea>
+
+            <div class="form-actions">
+              <app-ui-button variant="text" size="sm" (buttonClick)="cancelAddTask()"
+                >Cancel</app-ui-button
+              >
+              <app-ui-button size="sm" [disabled]="!newTaskTitle.trim()" (buttonClick)="addTask()">
+                Add
+              </app-ui-button>
+            </div>
+          </app-ui-card>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

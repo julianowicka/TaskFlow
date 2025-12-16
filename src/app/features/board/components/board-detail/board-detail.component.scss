@@ -80,6 +80,27 @@
   }
 }
 
+.columns-wrapper {
+  display: flex;
+  height: 100%;
+  gap: var(--spacing-4);
+  min-width: min-content;
+}
+
+.column-wrapper,
+.add-column-wrapper {
+  width: 300px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.add-column-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
 .add-column-form {
   min-width: 280px;
   width: 280px;
@@ -115,6 +136,28 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-2);
+  }
+}
+
+.board-not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: var(--spacing-8);
+
+  app-ui-card {
+    max-width: 500px;
+    text-align: center;
+    padding: var(--spacing-6);
+
+    h2 {
+      margin-top: 0;
+    }
+
+    app-ui-button {
+      margin-top: var(--spacing-4);
+    }
   }
 }
 
