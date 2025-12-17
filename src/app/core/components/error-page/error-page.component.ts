@@ -31,112 +31,31 @@ interface ErrorDetails {
           <app-ui-button variant="text" (buttonClick)="reload()">Reload Page</app-ui-button>
         </div>
 
-        <div class="error-details" *ngIf="showDetails">
-          <div class="error-details-header" (click)="toggleDetails()">
-            <span>Technical Details</span>
-            <app-ui-icon [name]="detailsExpanded ? 'chevron-up' : 'chevron-down'"></app-ui-icon>
-          </div>
-
-          <div class="error-details-content" *ngIf="detailsExpanded">
-            <div class="error-timestamp"><strong>Time:</strong> {{ errorDetails?.timestamp }}</div>
-
-            <div class="error-stack" *ngIf="errorDetails?.stack">
-              <strong>Stack Trace:</strong>
-              <pre>{{ errorDetails?.stack }}</pre>
+        @if (showDetails) {
+          <div class="error-details">
+            <div class="error-details-header" (click)="toggleDetails()">
+              <span>Technical Details</span>
+              <app-ui-icon [name]="detailsExpanded ? 'chevron-up' : 'chevron-down'"></app-ui-icon>
             </div>
+
+            @if (detailsExpanded) {
+              <div class="error-details-content">
+                <div class="error-timestamp"><strong>Time:</strong> {{ errorDetails?.timestamp }}</div>
+
+                @if (errorDetails?.stack) {
+                  <div class="error-stack">
+                    <strong>Stack Trace:</strong>
+                    <pre>{{ errorDetails?.stack }}</pre>
+                  </div>
+                }
+              </div>
+            }
           </div>
-        </div>
+        }
       </app-ui-card>
     </div>
   `,
-  styles: [
-    `
-      .error-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: var(--spacing-4);
-        background-color: var(--color-background);
-      }
-
-      .error-card {
-        width: 100%;
-        max-width: 600px;
-        text-align: center;
-      }
-
-      .error-icon {
-        color: var(--color-danger);
-        margin-bottom: var(--spacing-4);
-      }
-
-      .error-title {
-        font-size: var(--font-size-2xl);
-        font-weight: var(--font-weight-bold);
-        color: var(--color-text);
-        margin: 0 0 var(--spacing-4) 0;
-      }
-
-      .error-message {
-        font-size: var(--font-size-lg);
-        color: var(--color-text-secondary);
-        margin: 0 0 var(--spacing-6) 0;
-      }
-
-      .error-actions {
-        display: flex;
-        justify-content: center;
-        gap: var(--spacing-4);
-        margin-bottom: var(--spacing-6);
-      }
-
-      .error-details {
-        margin-top: var(--spacing-4);
-        text-align: left;
-        border-top: 1px solid var(--color-border);
-        padding-top: var(--spacing-4);
-      }
-
-      .error-details-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        color: var(--color-text-secondary);
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-medium);
-
-        &:hover {
-          color: var(--color-text);
-        }
-      }
-
-      .error-details-content {
-        margin-top: var(--spacing-4);
-        font-size: var(--font-size-sm);
-      }
-
-      .error-timestamp {
-        margin-bottom: var(--spacing-2);
-      }
-
-      .error-stack {
-        margin-top: var(--spacing-2);
-
-        pre {
-          background-color: var(--color-surface);
-          padding: var(--spacing-2);
-          border-radius: var(--border-radius-base);
-          overflow-x: auto;
-          white-space: pre-wrap;
-          word-break: break-word;
-          font-size: var(--font-size-xs);
-          color: var(--color-text-secondary);
-        }
-      }
-    `,
-  ],
+  styleUrl: './error-page.component.scss',
 })
 export class ErrorPageComponent implements OnInit {
   errorMessage = 'An unexpected error occurred while processing your request.';
@@ -147,7 +66,6 @@ export class ErrorPageComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Try to get error details from session storage
     const errorDetailsStr = sessionStorage.getItem('appError');
     if (errorDetailsStr) {
       try {
@@ -158,7 +76,6 @@ export class ErrorPageComponent implements OnInit {
         console.error('Failed to parse error details', e);
       }
 
-      // Clear the error from session storage
       sessionStorage.removeItem('appError');
     }
   }

@@ -17,7 +17,6 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    // Budujemy produkcyjnie i serwujemy statycznie (stabilniejsze E2E)
     command:
       'sh -c "npm run build -- --configuration=production && npx http-server dist/taskflow/browser -p 4200 --silent"',
     port: 4200,
