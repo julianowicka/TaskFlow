@@ -17,10 +17,9 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command:
-      'sh -c "npm run build -- --configuration=production && npx http-server dist/taskflow/browser -p 4200 --silent"',
+    command: 'npm run start',
     port: 4200,
-    reuseExistingServer: true,
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });
